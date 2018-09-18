@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include <EDSDK.h>             // I checked at EDSDK 3.8
-#include <opencv2/opencv.hpp>  // I checked at OpenCV 4.0.0-pre
+#include <EDSDK.h>             // Checked at EDSDK 3.8
+#include <opencv2/opencv.hpp>  // Checked at OpenCV 4.0.0-pre
 
 static bool flag = false;
 static EdsBaseRef eventRef = NULL;
@@ -121,8 +121,8 @@ int execute() {
   // ---------------------------
   // ----- Camera settings -----
   // ---------------------------
-  // Read "EDSDK API Programming Reference" to specify property values (ex. ISO
-  // 400 -> 0x58)
+  // Read "EDSDK API Programming Reference" to specify property values
+  // (ex. ISO 400 -> 0x58)
   EdsUInt32 iso = 0x58;  // ISO 400
   err = EdsSetPropertyData(camera, kEdsPropID_ISOSpeed, 0, sizeof(iso), &iso);
   if (err != EDS_ERR_OK) {
@@ -160,9 +160,9 @@ int execute() {
     return false;
   }
 
-  // ----------------------------------------------
-  // ----- Send Image Camera to Host computer -----
-  // ----------------------------------------------
+  // -------------------------------------------
+  // ----- Send the image to host computer -----
+  // -------------------------------------------
   EdsDirectoryItemInfo dirItemInfo;
   err = EdsGetDirectoryItemInfo(eventRef, &dirItemInfo);
   if (err != EDS_ERR_OK) {
@@ -177,7 +177,7 @@ int execute() {
   // err = EdsCreateFileStream(dirItemInfo.szFileName,
   // kEdsFileCreateDisposition_CreateAlways, kEdsAccess_ReadWrite, &stream); if
   // (err != EDS_ERR_OK) { 	std::cout << "Failed to create file stream" <<
-  //std::endl; 	return false;
+  // std::endl; 	return false;
   //}
 
   // err = EdsCreateMemoryStream(dirItemInfo.size, &stream);
