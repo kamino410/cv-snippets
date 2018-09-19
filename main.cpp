@@ -121,7 +121,7 @@ int execute() {
   // ---------------------------
   // ----- Camera settings -----
   // ---------------------------
-  // Read "EDSDK API Programming Reference" to specify property values
+  // Read "EDSDK API Programming Reference" to know property values
   // (ex. ISO 400 -> 0x58)
   EdsUInt32 iso = 0x58;  // ISO 400
   err = EdsSetPropertyData(camera, kEdsPropID_ISOSpeed, 0, sizeof(iso), &iso);
@@ -155,6 +155,7 @@ int execute() {
   std::cout << "set shutter" << std::endl;
 
   while (!flag) EdsGetEvent();  // wait until finish
+  flag = false;
   if (eventRef == NULL) {
     std::cout << "Failed to handle event" << std::endl;
     return false;
@@ -193,8 +194,8 @@ int execute() {
   //}
   // -----------------------------
 
-  // Case 2 : Convert image into cv::Mat
-  // -------------------------------------
+  // Case 2 : Convert the image into cv::Mat
+  // -----------------------------------------
   err = EdsCreateMemoryStream(dirItemInfo.size, &stream);
   if (err != EDS_ERR_OK) {
     std::cout << "Failed to create file stream" << std::endl;
@@ -229,8 +230,8 @@ int execute() {
 
   std::vector<unsigned char> buffer(data, data + size);
   cv::Mat img = cv::imdecode(buffer, cv::ImreadModes::IMREAD_COLOR);
-  // `img` should be used after release `eventRef` and `stream`
-  // -------------------------------------
+  // `img` should be used after release of `eventRef` and `stream`
+  // -----------------------------------------
 
   err = EdsRelease(eventRef);
   if (err != EDS_ERR_OK) {
