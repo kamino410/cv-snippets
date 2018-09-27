@@ -2,7 +2,7 @@
 #include <vector>
 #include <sstream>
 
-#include <opencv2/opencv.hpp> // checked at opencv 3.4.1
+#include <opencv2/opencv.hpp>  // checked at opencv 3.4.1
 #include <opencv2/structured_light.hpp>
 
 #define WINDOWWIDTH 1920
@@ -49,7 +49,7 @@ void main() {
   pattern->setWhiteThreshold(WHITETHRESHOLD);
   // 用途:ShadowMask計算時に white - black > blackThreshold
   //      ならば前景（グレイコードを認識した）と判別する
-  // 今回はこれを設定しても使われることはないが一応セットしておく
+  // 今回はこれを設定しても参照されることはないが一応セットしておく
   pattern->setBlackThreshold(BLACKTHRESHOLD);
 
   std::vector<cv::Mat> graycodes;

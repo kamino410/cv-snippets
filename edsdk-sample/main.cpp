@@ -176,26 +176,28 @@ int execute() {
   // Case 1 : Save image as file
   // -----------------------------
   // err = EdsCreateFileStream(dirItemInfo.szFileName,
-  // kEdsFileCreateDisposition_CreateAlways, kEdsAccess_ReadWrite, &stream); if
-  // (err != EDS_ERR_OK) { 	std::cout << "Failed to create file stream" <<
-  // std::endl; 	return false;
-  //}
+  //   kEdsFileCreateDisposition_CreateAlways, kEdsAccess_ReadWrite, &stream);
+  // if (err != EDS_ERR_OK) {
+  //   std::cout << "Failed to create file stream" << std::endl;
+  //   return false;
+  // }
 
   // err = EdsCreateMemoryStream(dirItemInfo.size, &stream);
   // if (err != EDS_ERR_OK) {
-  //	std::cout << "Failed to create file stream" << std::endl;
-  //	return false;
-  //}
+  //   std::cout << "Failed to create file stream" << std::endl;
+  //   return false;
+  // }
 
   // err = EdsDownload(eventRef, dirItemInfo.size, stream);
   // if (err != EDS_ERR_OK) {
-  //	std::cout << "Failed to download" << std::endl;
-  //	return false;
-  //}
+  //   std::cout << "Failed to download" << std::endl;
+  //   return false;
+  // }
   // -----------------------------
 
-  // Case 2 : Convert the image into cv::Mat (only when save as jpeg)
-  // ------------------------------------------------------------------
+  // Case 2 : Convert the image into cv::Mat
+  // (You have to set image quality as jpeg)
+  // -----------------------------------------
   err = EdsCreateMemoryStream(dirItemInfo.size, &stream);
   if (err != EDS_ERR_OK) {
     std::cout << "Failed to create file stream" << std::endl;
@@ -230,7 +232,7 @@ int execute() {
 
   std::vector<unsigned char> buffer(data, data + size);
   cv::Mat img = cv::imdecode(buffer, cv::ImreadModes::IMREAD_COLOR);
-  // `img` should be used after release of `eventRef` and `stream`
+  // `img` should be used after release `eventRef` and `stream`
   // -----------------------------------------
 
   err = EdsRelease(eventRef);
