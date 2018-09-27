@@ -76,7 +76,7 @@ int execute() {
   // -------------------------
   // ----- Configuration -----
   // -------------------------
-  EdsUInt32 quality = EdsImageQuality_LJN;
+  EdsUInt32 quality = EdsImageQuality_LJN;  // Save as normal jpeg
   err = EdsSetPropertyData(camera, kEdsPropID_ImageQuality, 0, sizeof(quality),
                            &quality);
   if (err != EDS_ERR_OK) {
@@ -194,8 +194,8 @@ int execute() {
   //}
   // -----------------------------
 
-  // Case 2 : Convert the image into cv::Mat
-  // -----------------------------------------
+  // Case 2 : Convert the image into cv::Mat (only when save as jpeg)
+  // ------------------------------------------------------------------
   err = EdsCreateMemoryStream(dirItemInfo.size, &stream);
   if (err != EDS_ERR_OK) {
     std::cout << "Failed to create file stream" << std::endl;
