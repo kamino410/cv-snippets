@@ -2,7 +2,7 @@
 
 My code snippets for computer vision.
 
-## edsdk-sample
+## edsdk
 Simple sample code to take a picture using Canon EDSDK.
 
 ## graycode
