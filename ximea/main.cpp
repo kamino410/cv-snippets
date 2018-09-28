@@ -32,7 +32,7 @@ int main() {
   stat = xiStartAcquisition(xiH);
   HandleResult(stat, "xiStartAcquisition");
 
-  // Preview the output from camera
+  // Preview output from camera
   do {
     // Get image from camera
     stat = xiGetImage(xiH, 5000, &img);
