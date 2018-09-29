@@ -13,7 +13,7 @@ Obtain projector-camera relationship using gray code pattern.
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
 ## optimization
-Numerical optimization using Eigen.
+Numerical optimization using Eigen / scipy.
 
 ## ximea
 Simple sample code to get image from ximea camera.
