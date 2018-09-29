@@ -12,5 +12,8 @@ Simple sample code to take a picture using Canon EDSDK.
 Obtain projector-camera relationship using gray code pattern.
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
+## optimization
+Numerical optimization using Eigen.
+
 ## ximea
 Simple sample code to get image from ximea camera.
