@@ -15,5 +15,8 @@ Obtain projector-camera relationship using gray code pattern.
 ## optimization
 Numerical optimization using Eigen / scipy.
 
+## web_opencv
+Apps driven by `opencv.js`.
+
 ## ximea
 Simple sample code to get image from ximea camera.

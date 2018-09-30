@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Find chessboard</title>
+</head>
+
+<body>
+    <h2>Find chessboard</h2>
+    <p id="status">OpenCV.js is loading...</p>
+    <div>
+        <div class="inputoutput">
+            <!-- <img id="imageSrc" alt="No Image" width="50%" /> -->
+            <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+        </div>
+        <div class="inputoutput">
+            <canvas id="canvasOutput" width="300"></canvas>
+            <div class="caption">canvasOutput</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //let imgElement = document.getElementById('imageSrc');
+        let imgElement = document.createElement("IMG");
+        let inputElement = document.getElementById('fileInput');
+
+        inputElement.addEventListener('change', (e) => {
+            imgElement.src = URL.createObjectURL(e.target.files[0]);
+        }, false);
+        imgElement.onload = function () {
+            let mat = cv.imread(imgElement);
+
+            let corners = new cv.Mat(0, 0, cv.CV_32F);
+            if (cv.findChessboardCorners(mat, new cv.Size(10, 7), corners)) {
+                cv.drawChessboardCorners(mat, new cv.Size(10, 7), corners, true);
+            }
+
+            cv.imshow('canvasOutput', mat);
+            mat.delete();
+            corners.delete();
+        };
+
+        function onOpenCvReady() {
+            document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        }
+    </script>
+    <script async src="opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+
+</html>
