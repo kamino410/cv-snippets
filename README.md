@@ -5,6 +5,9 @@ My code snippets for computer vision.
 ## camera_calibration
 Classes for mono / stereo camera calibration using checker board.
 
+## camera_distortion_simulator
+Simulator of camera's intrinsic / distortion params.
+
 ## edsdk
 Simple sample code to take a picture using Canon EDSDK.
 

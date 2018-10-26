@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Camera Distortion Simulator</title>
+    <script type='text/javascript' src='./src.js'></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .range-input {
+            width: 50%;
+        }
+        .container {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Camera Distortion Simulator</h1>
+    <canvas id='gl-canvas'></canvas>
+    <div class='container'>
+        <p>Image size : 480 x 360 [px]</p>
+        Texture : <select id='tex-src'>
+            <option value=0>Grid</option>
+            <option value=1>Buildings</option>
+        </select>
+    </div>
+    <div class='container'>
+        <input id='reset' type='button' value='reset'>
+    </div>
+    <div class='container'>
+        <div>
+            fx : <input id='fx' class='range-input' type='range' min='480' max='960' value='480'>
+            <span id='lab-fx'></span>
+        </div>
+        <div>
+            fy : <input id='fy' class='range-input' type='range' min='480' max='960' value='480'>
+            <span id='lab-fy'></span>
+        </div>
+        <div>
+            cx : <input id='cx' class='range-input' type='range' min='120' max='360' value='240'>
+            <span id='lab-cx'></span>
+        </div>
+        <div>
+            cy : <input id='cy' class='range-input' type='range' min='90' max='270' value='180'>
+            <span id='lab-cy'></span>
+        </div>
+        <div>
+            k1 : <input id='k1' class='range-input' type='range' min='-1.0' max='1.0' step='0.01' value='0'>
+            <span id='lab-k1'></span>
+        </div>
+        <div>
+            k2 : <input id='k2' class='range-input' type='range' min='-1.0' max='1.0' step='0.01' value='0'>
+            <span id='lab-k2'></span>
+        </div>
+        <div>
+            k3 : <input id='k3' class='range-input' type='range' min='-1.0' max='1.0' step='0.01' value='0'>
+            <span id='lab-k3'></span>
+        </div>
+        <div>
+            p1 : <input id='p1' class='range-input' type='range' min='-0.2' max='0.2' step='0.01' value='0'>
+            <span id='lab-p1'></span>
+        </div>
+        <div>
+            p2 : <input id='p2' class='range-input' type='range' min='-0.2' max='0.2' step='0.01' value='0'>
+            <span id='lab-p2'></span>
+        </div>
+    </div>
+</body>
+
+</html>
