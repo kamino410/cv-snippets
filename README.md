@@ -2,6 +2,8 @@
 
 My code snippets for computer vision.
 
+Some web applications are published [here](https://kamino410.github.io/cv-snippets).
+
 ## camera_calibration
 Classes for mono / stereo camera calibration using checker board.
 
