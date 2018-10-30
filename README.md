@@ -26,6 +26,10 @@ Numerical optimization using Eigen / scipy.
 ## projector_calibration
 Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
 
+## unity
+* OpenCVTranslate<br>Script to reflect OpenCV extrinsic parameters to the object.
+* OpenCVCameraParams<br>Script to reflect OpenCV intrinsic parameters to the camera.
+
 ## web_opencv
 Apps driven by `opencv.js`.
 
