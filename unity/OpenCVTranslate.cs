@@ -10,7 +10,7 @@ using UnityEngine;
 ///     Assume that Unity coordinate and OpenCV coordinate share X / Z axises (Y axis is inversed).
 /// </summary>
 [ExecuteInEditMode]
-public class OpenCVTranspose : MonoBehaviour {
+public class OpenCVTranslate : MonoBehaviour {
     public float RodriguesX;
     public float RodriguesY;
     public float RodriguesZ;
