@@ -30,8 +30,8 @@ Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondenc
 * OpenCVTranslate<br>Script to reflect OpenCV extrinsic parameters to the object.
 * OpenCVCameraParams<br>Script to reflect OpenCV intrinsic parameters to the camera.
 
-## web_opencv
-Apps driven by `opencv.js`.
+## web_*
+Apps driven by OpenCV.js or WebGL.
 
 ## ximea
 Simple sample code to get image from ximea camera.

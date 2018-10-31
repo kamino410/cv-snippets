@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Projector Calibration</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        canvas {
+            background: #FFF;
+        }
+
+        textarea {
+            font-size: 15px;
+        }
+
+        div {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Projector Calibration</h1>
+    <canvas id='canvas' style='cursor:crosshair' hidden='true'></canvas>
+    <div>
+        <p id="status" class="loading">Loading...</p>
+    </div>
+    <div>
+        <button id="fullscreen">Go fullscreen</button>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>Image points</td>
+                <td>Object points</td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id='img' cols='40' rows='20'></textarea>
+                </td>
+                <td>
+                    <textarea id='obj' cols='40' rows='20'></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button id="calc">Calculate</button>
+    </div>
+    <div>
+        <textarea readonly id='result' cols='100' rows='10'></textarea>
+    </div>
+    <script>
+        var fsButton = document.getElementById("fullscreen");
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var img = document.getElementById('img');
+        var obj = document.getElementById('obj');
+        var result = document.getElementById('result');
+        var imgWidth = 0;
+        var imgHeight = 0;
+
+        fsButton.onclick = function () {
+            canvas.webkitRequestFullscreen();
+        };
+        document.onwebkitfullscreenchange = function () {
+            if (document.webkitCurrentFullScreenElement != null) {
+                canvas.hidden = false;
+            } else {
+                canvas.hidden = true;
+            }
+        };
+        window.onresize = function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.clientWidth = window.innerWidth;
+            canvas.clientHeight = window.innerHeight;
+
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+            ctx.font = '48px serif';
+            ctx.fillStyle = 'black';
+            if (screen.width > canvas.width) {
+                ctx.fillText('Press ctrl + `-`', canvas.width / 3, canvas.height / 2);
+            } else if (screen.width < canvas.width) {
+                ctx.fillText('Press ctrl + `+`', canvas.width / 3, canvas.height / 2);
+            }
+        };
+        canvas.onclick = function (event) {
+            img.value += event.pageX + ', ' + event.pageY + '\n';
+        };
+
+        function readCSV(txt, colcount) {
+            var arr = txt.split('\n');
+            var res = [];
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == '') break;
+                var cols = arr[i].split(',');
+                for (var j = 0; j < colcount; j++) {
+                    res.push(parseFloat(cols[j]));
+                }
+            }
+            return res;
+        }
+
+        var calcButton = document.getElementById("calc");
+        calcButton.onclick = function () {
+            const imgPoints = new Float32Array(readCSV(img.value, 2));
+            const objPoints = new Float32Array(readCSV(obj.value, 3));
+            const imgMat = new cv.matFromArray(imgPoints.length / 2, 2, cv.CV_32F, imgPoints);
+            const objMat = new cv.matFromArray(objPoints.length / 3, 3, cv.CV_32F, objPoints);
+            const imgMatVec = new cv.MatVector();
+            const objMatVec = new cv.MatVector();
+            imgMatVec.push_back(imgMat);
+            objMatVec.push_back(objMat);
+
+            const intr = new cv.matFromArray(3, 3, cv.CV_32F, new Float32Array([screen.width, 0., screen.width / 2., 0., screen.width, screen.height / 2., 0., 0., 1.]));
+            const dist = new cv.matFromArray(1, 5, cv.CV_32F, new Float32Array([0., 0., 0., 0., 0.]));
+            console.log(dist.data32F);
+            const rvecs = new cv.MatVector();
+            const tvecs = new cv.MatVector();
+            const imgSize = new cv.Size(screen.width, screen.height);
+
+            const retval = cv.calibrateCamera(objMatVec, imgMatVec, imgSize, intr, dist, rvecs, tvecs,
+                2097377,
+                new cv.TermCriteria(cv.TermCriteria_COUNT + cv.TermCriteria_EPS, 100, 0.00001));
+
+            result.value = 're-projection error : ' + retval + '\n';
+            result.value += 'intrinsic matrix : ' + intr.data64F + '\n';
+            result.value += 'distortion : ' + dist.data64F + '\n';
+            const rvec = rvecs.get(0);
+            result.value += 'rodrigues : ' + rvec.data64F + '\n';
+            const rot = new cv.Mat();
+            cv.Rodrigues(rvec, rot);
+            result.value += 'rotation matrix : ' + rot.data64F + '\n';
+            const tvec = tvecs.get(0);
+            result.value += 'translation vector : ' + tvec.data64F + '\n';
+
+            [imgMatVec, objMatVec, imgMat, objMat, intr, dist, rvecs, tvecs, rvec, tvec].forEach(m => m.delete());
+        };
+
+        const statusText = document.getElementById('status');
+        function onOpenCvReady() {
+            statusText.innerHTML = 'OpenCV.js is ready.';
+            statusText.className = "loaded";
+        }
+    </script>
+    <script async src="../js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+
+</html>
