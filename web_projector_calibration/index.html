@@ -57,14 +57,14 @@
         <textarea readonly id='result' cols='100' rows='10'></textarea>
     </div>
     <script>
-        var fsButton = document.getElementById("fullscreen");
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
-        var img = document.getElementById('img');
-        var obj = document.getElementById('obj');
-        var result = document.getElementById('result');
-        var imgWidth = 0;
-        var imgHeight = 0;
+        const fsButton = document.getElementById("fullscreen");
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = document.getElementById('img');
+        const obj = document.getElementById('obj');
+        const result = document.getElementById('result');
+        const imgWidth = 0;
+        const imgHeight = 0;
 
         fsButton.onclick = function () {
             canvas.webkitRequestFullscreen();
