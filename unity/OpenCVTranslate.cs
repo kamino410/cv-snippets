@@ -11,9 +11,9 @@ using UnityEngine;
 /// </summary>
 [ExecuteInEditMode]
 public class OpenCVTranslate : MonoBehaviour {
-    public float RodriguesX;
-    public float RodriguesY;
-    public float RodriguesZ;
+    public float RotationX;
+    public float RotationY;
+    public float RotationZ;
 
     public float TranslationX;
     public float TranslationY;
@@ -24,7 +24,7 @@ public class OpenCVTranslate : MonoBehaviour {
 
     void Update() {
         this.transform.localRotation = new Quaternion();
-        var rod = new Vector3(RodriguesX, -RodriguesY, RodriguesZ);
+        var rod = new Vector3(RotationX, -RotationY, RotationZ);
         this.transform.Rotate(rod, rod.magnitude * 180 / Mathf.PI, Space.Self);
 
         var xdir = this.transform.localRotation * Vector3.right;
