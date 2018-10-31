@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Calibrate Camera</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+    <h1>Calibrate Camera</h1>
+    <p>This is a camera parameter calculator.<br>
+        This application is driven by OpenCV.js web-assembly(ver.4.0.0-pre 2018/09/30).<br>
+        I recommend to run on Google Chrome.</p>
+    <div class="container">
+        <h2>OpenCV.js Status</h2>
+        <div class="content">
+            <p id="status" class="loading">Loading...</p>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Input Images</h2>
+        <div class="content">
+            <Label class="input-custom-file mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                Choose files
+                <input type="file" multiple="multiple" id="fileInput" name="file" />
+            </label>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Options</h2>
+        <div class="content">
+            <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="hori">
+                    <label class="mdl-textfield__label" for="hori">Number of horizontal cross points of chessboard</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+            </form>
+            <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="vert">
+                    <label class="mdl-textfield__label" for="vert">Number of vertical cross points of chessboard</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+            </form>
+            <form action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="block">
+                    <label class="mdl-textfield__label" for="block">Edge length of a block of chessboard</label>
+                    <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+                <p>* If you don't need to know extrinsic parameters, you can set any non-zero number to edge length.</p>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Calculate</h2>
+        <div class="content">
+            <button id="calculate" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Go!</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Results</h2>
+        <div class="content">
+            <div id="results"></div>
+        </div>
+    </div>
+    <div id="image_container"></div>
+
+    <script type="text/javascript">
+        let images = [];
+
+        function drawImageToCanvas(mat, canvas) {
+            let imgData = new ImageData(new Uint8ClampedArray(mat.data), mat.cols, mat.rows);
+
+            // Use tmp canvas to resize the image
+            let tmp = document.createElement('canvas');
+            tmp.height = imgData.height;
+            tmp.width = imgData.width;
+            tmp.getContext('2d').putImageData(imgData, 0, 0);
+
+            canvas.height = 300;
+            canvas.width = 300 * tmp.width / tmp.height;
+            let ctx = canvas.getContext('2d');
+            ctx.scale(300 / tmp.height, 300 / tmp.height);
+            ctx.drawImage(tmp, 0, 0);
+        }
+
+        const inputElement = document.getElementById('fileInput');
+        inputElement.addEventListener('change', (e) => {
+            // Delete old images
+            images.forEach(item => item.delete());
+            images = [];
+
+            const container = document.getElementById('image_container');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+
+            document.getElementById('results').innerHTML = "";
+
+            // Sort files by name
+            const files = [].slice.call(e.target.files);
+            files.sort(function (a, b) {
+                var nameA = a.name.toUpperCase();
+                var nameB = b.name.toUpperCase();
+                return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+            });
+
+            for (var i = 0; i < files.length; i++) {
+                const imgElement = new Image();
+                imgElement.src = URL.createObjectURL(files[i]);
+
+                const canvasDiv = document.createElement('div');
+                const caption = document.createElement('p');
+                const extrResults = document.createElement('p');
+                const canvas = document.createElement('canvas');
+                canvasDiv.style.cssFloat = 'left';
+                canvasDiv.style.margin = '5px 5px 10px 5px';
+                canvasDiv.appendChild(canvas);
+                canvasDiv.appendChild(caption);
+                canvasDiv.appendChild(extrResults);
+                container.appendChild(canvasDiv);
+
+                const index = i;
+                imgElement.onload = function () {
+                    let mat = cv.imread(imgElement);
+                    images.push({ index, mat });
+                    drawImageToCanvas(mat, canvas);
+                }
+            }
+        }, false);
+
+        const calculateElement = document.getElementById('calculate');
+        calculateElement.onclick = function () {
+            document.getElementById('results').innerHTML = "";
+
+            // Get input values
+            const hori = Number(document.getElementById('hori').value);
+            const vert = Number(document.getElementById('vert').value);
+            const blockSize = Number(document.getElementById('block').value);
+            if (hori === NaN || hori === 0 || vert === NaN || vert === 0 || blockSize === NaN || blockSize === 0) {
+                alert('Invalid options');
+                return;
+            }
+            if (images.length < 3) {
+                alert('Input images are not found');
+                return;
+            }
+
+            const imageSize = new cv.Size(images[0].mat.cols, images[0].mat.rows);
+            const cornersList = [];
+            const container = document.getElementById('image_container');
+            for (var i = 0; i < images.length; i++) {
+                let corners = new cv.Mat();
+                const canvas = container.children[i].children[0];
+                const caption = container.children[i].children[1];
+                if (cv.findChessboardCorners(images[i].mat, new cv.Size(hori, vert), corners)) {
+                    const index = images[i].index;
+                    cornersList.push({ index, corners });
+
+                    let imgVizCorners = images[i].mat.clone();
+                    cv.drawChessboardCorners(imgVizCorners, new cv.Size(hori, vert), corners, true);
+                    drawImageToCanvas(imgVizCorners, canvas);
+                    imgVizCorners.delete();
+
+                    caption.innerText = 'Found';
+                    caption.style.color = 'blue';
+                } else {
+                    drawImageToCanvas(images[i].mat, canvas);
+
+                    caption.innerText = 'Not found';
+                    caption.style.color = 'red';
+                }
+            }
+
+            if (cornersList.length < 3) {
+                alert('Chessboard was not found in enough number of images');
+                return;
+            }
+
+            let cornersLocal = [];
+            for (var i = 0; i < hori * vert; i++) {
+                cornersLocal.push(blockSize * (i % hori));
+                cornersLocal.push(blockSize * Math.floor(i / hori));
+                cornersLocal.push(0.0);
+            }
+            cornersLocal = cv.matFromArray(hori * vert, 3, cv.CV_32F, cornersLocal);
+
+            const corners2D = new cv.MatVector();
+            const corners3D = new cv.MatVector();
+            for (var i = 0; i < cornersList.length; i++) {
+                corners2D.push_back(cornersList[i].corners);
+                corners3D.push_back(cornersLocal);
+            }
+
+            const intr = new cv.Mat();
+            const dist = new cv.Mat();
+            const rvecs = new cv.MatVector();
+            const tvecs = new cv.MatVector();
+            cv.calibrateCamera(corners3D, corners2D, imageSize, intr, dist, rvecs, tvecs);
+
+            const inputElement = document.getElementById('results');
+            const intrData = intr.data64F;
+            const distData = dist.data64F;
+
+            inputElement.innerHTML =
+                "<h3>Intrinsic parameters :</h3><div class='content'><table>" +
+                "<tr><td>" + intrData[0].toFixed(5) + "</td><td>" + intrData[1].toFixed(5) +
+                "</td><td>" + intrData[2].toFixed(5) + "</td></tr>" +
+                "<tr><td>" + intrData[3].toFixed(5) + "</td><td>" + intrData[4].toFixed(5) +
+                "</td><td>" + intrData[5].toFixed(5) + "</td></tr>" +
+                "<tr><td>" + intrData[6].toFixed(5) + "</td><td>" + intrData[7].toFixed(5) +
+                "</td><td>" + intrData[8].toFixed(5) + "</td></tr></table></div>" +
+                "<h3>Distortion parameters :</h3><div class='content'><table>" +
+                "<tr><td>" + distData[0].toFixed(8) + "</td><td>" + distData[1].toFixed(8) +
+                "</td></tr>" +
+                "<tr><td>" + distData[2].toFixed(8) + "</td><td>" + distData[3].toFixed(8) +
+                "</td><td>" + distData[4].toFixed(8) +
+                "</td></tr></table></div>";
+
+            for (var i = 0; i < images.length; i++) {
+                container.children[i].children[2].innerHTML = "";
+            }
+
+            for (var i = 0; i < cornersList.length; i++) {
+                const extrResults = container.children[cornersList[i].index].children[2];
+                const rvec = rvecs.get(i);
+                const rot = new cv.Mat();
+                cv.Rodrigues(rvec, rot);
+                const tvec = tvecs.get(i);
+                const rvecData = rot.data64F;
+                const tvecData = tvec.data64F;
+                extrResults.innerHTML =
+                    "<h3>Extrinsic parameters :</h3><div class='content'><p>Rotation</p><table>" +
+                    "<tr><td>" + rvecData[0].toFixed(8) + "</td><td>" + rvecData[1].toFixed(8) +
+                    "</td><td>" + rvecData[2].toFixed(8) + "</td></tr>" +
+                    "<tr><td>" + rvecData[3].toFixed(8) + "</td><td>" + rvecData[4].toFixed(8) +
+                    "</td><td>" + rvecData[5].toFixed(8) + "</td></tr>" +
+                    "<tr><td>" + rvecData[6].toFixed(8) + "</td><td>" + rvecData[7].toFixed(8) +
+                    "</td><td>" + rvecData[8].toFixed(8) + "</td></tr></table><p>Transport</p><table>" +
+                    "<tr><td>" + tvecData[0].toFixed(8) + "</td><td>" + tvecData[1].toFixed(8) +
+                    "</td><td>" + tvecData[2].toFixed(8) + "</td></tr><table></div>";
+                rot.delete();
+                rvec.delete();
+                tvec.delete();
+            }
+
+            [cornersLocal, corners2D, corners3D, intr, dist, rvecs, tvecs].forEach(m => m.delete());
+            cornersList.forEach(item => item.corners.delete());
+        };
+
+        const statusText = document.getElementById('status');
+        function onOpenCvReady() {
+            statusText.innerHTML = 'Ready.';
+            statusText.className = "loaded";
+        }
+    </script>
+    <script async src="../js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+
+</html>

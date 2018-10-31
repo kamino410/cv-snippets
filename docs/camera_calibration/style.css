@@ -1,0 +1,48 @@
+body {
+    padding: 10px 10px;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 10px 0px;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 0px;
+}
+
+p {
+    font-size: 16px;
+}
+
+div.container {
+    margin: 10px;
+    padding: 0px 10px 10px 10px;
+    background-color: #f3f3f3;
+}
+
+div.content {
+    margin: 0px 0px 0px 20px;
+}
+
+#image_container {
+    margin: 20px;
+}
+
+p.loading {
+    color: red;
+}
+
+p.loaded {
+    color: blue;
+}
+
+label.input-custom-file input[type=file] {
+    display: none;
+}
