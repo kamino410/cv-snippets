@@ -15,8 +15,15 @@ let state = {
   k1: null,
   k2: null,
   k3: null,
+  k4: null,
+  k5: null,
+  k6: null,
   p1: null,
   p2: null,
+  s1: null,
+  s2: null,
+  s3: null,
+  s4: null,
 };
 
 const vertSrc1 = `
@@ -32,8 +39,15 @@ uniform float cy;
 uniform float k1;
 uniform float k2;
 uniform float k3;
+uniform float k4;
+uniform float k5;
+uniform float k6;
 uniform float p1;
 uniform float p2;
+uniform float s1;
+uniform float s2;
+uniform float s3;
+uniform float s4;
 
 void main() {
   float x = position.x;
@@ -43,11 +57,11 @@ void main() {
   float r4 = r2*r2;
   float r6 = r4*r2;
 
-  float c = 1.0 + k1*r2 + k2*r4 + k3*r6 + 2.0*p1*y + 2.0*p2*x;
+  float c = (1.0 + k1*r2 + k2*r4 + k3*r6)/(1.0 + k4*r2 + k5*r4 + k6*r6) + 2.0*p1*y + 2.0*p2*x;
   if (c < 0.0) z = 1.0; // not drawn
 
-  float tx = p2*r2;
-  float ty = p1*r2;
+  float tx = p2*r2 + s1*r2 + s2*r4;
+  float ty = p1*r2 + s3*r2 + s4*r4;
 
   float xd = x*c + tx;
   float yd = y*c + ty;
@@ -187,8 +201,15 @@ function drawScene(time) {
   gl.uniform1f(gl.getUniformLocation(state.pro1, 'k1'), state.k1);
   gl.uniform1f(gl.getUniformLocation(state.pro1, 'k2'), state.k2);
   gl.uniform1f(gl.getUniformLocation(state.pro1, 'k3'), state.k3);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 'k4'), state.k4);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 'k5'), state.k5);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 'k6'), state.k6);
   gl.uniform1f(gl.getUniformLocation(state.pro1, 'p1'), state.p1);
   gl.uniform1f(gl.getUniformLocation(state.pro1, 'p2'), state.p2);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 's1'), state.s1);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 's2'), state.s2);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 's3'), state.s3);
+  gl.uniform1f(gl.getUniformLocation(state.pro1, 's4'), state.s4);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, state.vpbo);
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, state.ibo);
@@ -248,6 +269,21 @@ function main() {
   labelk3.innerHTML = state.k3 = k3.value - 0;
   k3.oninput = function () { labelk3.innerHTML = state.k3 = k3.value - 0; };
 
+  const k4 = document.getElementById('k4');
+  const labelk4 = document.getElementById('lab-k4');
+  labelk4.innerHTML = state.k4 = k4.value - 0;
+  k4.oninput = function () { labelk4.innerHTML = state.k4 = k4.value - 0; };
+
+  const k5 = document.getElementById('k5');
+  const labelk5 = document.getElementById('lab-k5');
+  labelk5.innerHTML = state.k5 = k5.value - 0;
+  k5.oninput = function () { labelk5.innerHTML = state.k5 = k5.value - 0; };
+
+  const k6 = document.getElementById('k6');
+  const labelk6 = document.getElementById('lab-k6');
+  labelk6.innerHTML = state.k6 = k6.value - 0;
+  k6.oninput = function () { labelk6.innerHTML = state.k6 = k6.value - 0; };
+
   const p1 = document.getElementById('p1');
   const labelp1 = document.getElementById('lab-p1');
   labelp1.innerHTML = state.p1 = p1.value - 0;
@@ -258,6 +294,26 @@ function main() {
   labelp2.innerHTML = state.p2 = p2.value - 0;
   p2.oninput = function () { labelp2.innerHTML = state.p2 = p2.value - 0; };
 
+  const s1 = document.getElementById('s1');
+  const labels1 = document.getElementById('lab-s1');
+  labels1.innerHTML = state.s1 = s1.value - 0;
+  s1.oninput = function () { labels1.innerHTML = state.s1 = s1.value - 0; };
+
+  const s2 = document.getElementById('s2');
+  const labels2 = document.getElementById('lab-s2');
+  labels2.innerHTML = state.s2 = s2.value - 0;
+  s2.oninput = function () { labels2.innerHTML = state.s2 = s2.value - 0; };
+
+  const s3 = document.getElementById('s3');
+  const labels3 = document.getElementById('lab-s3');
+  labels3.innerHTML = state.s3 = s3.value - 0;
+  s3.oninput = function () { labels3.innerHTML = state.s3 = s3.value - 0; };
+
+  const s4 = document.getElementById('s4');
+  const labels4 = document.getElementById('lab-s4');
+  labels4.innerHTML = state.s4 = s4.value - 0;
+  s4.oninput = function () { labels4.innerHTML = state.s4 = s4.value - 0; };
+
   const reset = document.getElementById('reset');
   reset.onclick = function () {
     fx.value = 480; fx.oninput.call();
@@ -267,8 +323,15 @@ function main() {
     k1.value = 0; k1.oninput.call();
     k2.value = 0; k2.oninput.call();
     k3.value = 0; k3.oninput.call();
+    k4.value = 0; k4.oninput.call();
+    k5.value = 0; k5.oninput.call();
+    k6.value = 0; k6.oninput.call();
     p1.value = 0; p1.oninput.call();
     p2.value = 0; p2.oninput.call();
+    s1.value = 0; s1.oninput.call();
+    s2.value = 0; s2.oninput.call();
+    s3.value = 0; s3.oninput.call();
+    s4.value = 0; s4.oninput.call();
   };
 }
 
