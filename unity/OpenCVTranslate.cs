@@ -23,9 +23,9 @@ public class OpenCVTranslate : MonoBehaviour {
     }
 
     void Update() {
-        this.transform.localRotation = new Quaternion();
         var rod = new Vector3(RotationX, -RotationY, RotationZ);
-        this.transform.Rotate(rod, rod.magnitude * 180 / Mathf.PI, Space.Self);
+        this.transform.rotation = Quaternion.AngleAxis(rod.magnitude * 180 / Mathf.PI, rod);
+
 
         var xdir = this.transform.localRotation * Vector3.right;
         var ydir = this.transform.localRotation * Vector3.up;
