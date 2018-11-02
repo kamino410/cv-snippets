@@ -30,6 +30,8 @@ Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondenc
 * OpenCVTranslate<br>Script to reflect OpenCV extrinsic parameters to the object.
 * OpenCVCameraParams<br>Script to reflect OpenCV intrinsic parameters to the camera.
 
+[https://kamino.hatenablog.com/entry/unity-import-opencv-camera-params](https://kamino.hatenablog.com/entry/unity-import-opencv-camera-params)
+
 ## web_*
 Apps driven by OpenCV.js or WebGL.
 
