@@ -131,16 +131,29 @@
                 2097377,
                 new cv.TermCriteria(cv.TermCriteria_COUNT + cv.TermCriteria_EPS, 100, 0.00001));
 
-            result.value = 're-projection error : ' + retval + '\n';
-            result.value += 'intrinsic matrix : ' + intr.data64F + '\n';
-            result.value += 'distortion : ' + dist.data64F + '\n';
+            result.value = 're-projection error : ' + retval.toFixed(3) + '\n';
+            result.value += 'intrinsic matrix :\n'
+            result.value += '  fx : ' + intr.data64F[0].toFixed(3) + '\n';
+            result.value += '  fy : ' + intr.data64F[4].toFixed(3) + '\n';
+            result.value += '  cx : ' + intr.data64F[2].toFixed(3) + '\n';
+            result.value += '  cy : ' + intr.data64F[5].toFixed(3) + '\n';
+            result.value += 'distortion (fixed to 0) :\n  ' + dist.data64F + '\n';
             const rvec = rvecs.get(0);
-            result.value += 'rodrigues : ' + rvec.data64F + '\n';
+            result.value += 'rotation vector :\n';
+            result.value += '  x : ' + rvec.data64F[0].toFixed(5) + '\n';
+            result.value += '  y : ' + rvec.data64F[1].toFixed(5) + '\n';
+            result.value += '  z : ' + rvec.data64F[2].toFixed(5) + '\n';
             const rot = new cv.Mat();
             cv.Rodrigues(rvec, rot);
-            result.value += 'rotation matrix : ' + rot.data64F + '\n';
+            result.value += 'rotation matrix :\n';
+            result.value += '  ' + rot.data64F[0].toFixed(6) + ', ' + rot.data64F[1].toFixed(6) + ', ' + rot.data64F[2].toFixed(6) + '\n';
+            result.value += '  ' + rot.data64F[3].toFixed(6) + ', ' + rot.data64F[4].toFixed(6) + ', ' + rot.data64F[5].toFixed(6) + '\n';
+            result.value += '  ' + rot.data64F[6].toFixed(6) + ', ' + rot.data64F[7].toFixed(6) + ', ' + rot.data64F[8].toFixed(6) + '\n';
             const tvec = tvecs.get(0);
-            result.value += 'translation vector : ' + tvec.data64F + '\n';
+            result.value += 'translation vector :\n';
+            result.value += '  x : ' + tvec.data64F[0].toFixed(6) + '\n';
+            result.value += '  y : ' + tvec.data64F[1].toFixed(6) + '\n';
+            result.value += '  z : ' + tvec.data64F[2].toFixed(6) + '\n';
 
             [imgMatVec, objMatVec, imgMat, objMat, intr, dist, rvecs, tvecs, rvec, tvec].forEach(m => m.delete());
         };
