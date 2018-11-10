@@ -26,6 +26,9 @@ Obtain projector-camera relationship using gray code pattern.
 ## optimization
 Numerical optimization using Eigen / scipy.
 
+## plotly
+Visualization 3D data using plotly.py.
+
 ## projector_calibration
 Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
 
