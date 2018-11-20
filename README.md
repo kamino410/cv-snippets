@@ -15,6 +15,9 @@ Simple sample code to take a picture using Canon EDSDK.
 
 [https://kamino.hatenablog.com/entry/canon-edsdk](https://kamino.hatenablog.com/entry/canon-edsdk)
 
+## gamma_estimation
+Estimate the gamma value of display from captured camera images.
+
 ## geometry
 * Voronoi diagram / Delaunay diagram
 
