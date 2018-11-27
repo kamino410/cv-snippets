@@ -140,5 +140,5 @@ int main() {
 
   lm_b.minimize(xb);
 
-  std::cout << "result:" << std::endl << xa << std::endl;
+  std::cout << "result:" << std::endl << xb << std::endl;
 }
