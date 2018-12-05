@@ -18,6 +18,7 @@
 void initializeCamera() {}
 cv::Mat getCameraImage() {
   // return img.clone(); のようにclone()しなければいけないケースがあるので注意
+  // グレイスケール画像を返すように実装
 }
 void terminateCamera() {}
 
@@ -66,8 +67,7 @@ void main() {
   cv::resizeWindow("Pattern", GRAYCODEWIDTH, GRAYCODEHEIGHT);
   // 2枚目のディスプレイにフルスクリーン表示
   cv::moveWindow("Pattern", 1920, 0);
-  cv::setWindowProperty("Pattern", cv::WND_PROP_FULLSCREEN,
-                        cv::WINDOW_FULLSCREEN);
+  cv::setWindowProperty("Pattern", cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
 
   // ----------------------------------
   // ----- Wait camera adjustment -----
@@ -92,6 +92,7 @@ void main() {
     // 必要な待ち時間は使うカメラに依存
     cv::waitKey(400);
 
+    // グレイスケールで撮影
     cv::Mat img = getCameraImage();
     std::ostringstream oss;
     oss << std::setfill('0') << std::setw(2) << cnt++;
@@ -121,13 +122,11 @@ void main() {
   for (int y = 0; y < camHeight; y++) {
     for (int x = 0; x < camWidth; x++) {
       cv::Point pixel;
-      if (white.at<cv::uint8_t>(y, x) - black.at<cv::uint8_t>(y, x) >
-              BLACKTHRESHOLD &&
+      if (white.at<cv::uint8_t>(y, x) - black.at<cv::uint8_t>(y, x) > BLACKTHRESHOLD &&
           !pattern->getProjPixel(captured, x, y, pixel)) {
         c2pX.at<cv::uint16_t>(y, x) = pixel.x;
         c2pY.at<cv::uint16_t>(y, x) = pixel.y;
-        c2pList.push_back(C2P(x, y, pixel.x * GRAYCODEWIDTHSTEP,
-                              pixel.y * GRAYCODEHEIGHTSTEP));
+        c2pList.push_back(C2P(x, y, pixel.x * GRAYCODEWIDTHSTEP, pixel.y * GRAYCODEHEIGHTSTEP));
       }
     }
   }
@@ -137,8 +136,7 @@ void main() {
   // ---------------------------
   std::ofstream os("c2p.csv");
   for (auto elem : c2pList) {
-    os << elem.cx << ", " << elem.cy << ", " << elem.px << ", " << elem.py
-       << std::endl;
+    os << elem.cx << ", " << elem.cy << ", " << elem.px << ", " << elem.py << std::endl;
   }
   os.close();
 
