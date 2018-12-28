@@ -26,6 +26,9 @@ Obtain projector-camera relationship using gray code pattern.
 
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
+## motive_api
+C++ sample to get traking informations from Motive of OptiTrack.
+
 ## optimization
 Numerical optimization using Eigen / scipy.
 
