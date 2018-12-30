@@ -35,6 +35,8 @@ Numerical optimization using Eigen / scipy.
 ## plotly
 Visualization 3D data using plotly.py.
 
+[https://kamino.hatenablog.com/entry/python-3d-visualization](https://kamino.hatenablog.com/entry/python-3d-visualization)
+
 ## projector_calibration
 Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
 
