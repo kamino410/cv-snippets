@@ -6,7 +6,7 @@
 
 #define EPS 1e-10
 
-class Rosenbrock {
+class MyFunctor {
  private:
   const double t[101] = {
       0.,   0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1,  0.11, 0.12, 0.13, 0.14,
@@ -59,7 +59,7 @@ class Rosenbrock {
   int n;
 
  public:
-  Rosenbrock(int _n) : n(_n) {}
+  MyFunctor(int _n) : n(_n) {}
   double operator()(const Eigen::VectorXd& x, Eigen::VectorXd& grad) {
     double err = sqad_cost_func(x);
     for (int i = 0; i < x.size(); i++) {
@@ -77,7 +77,7 @@ int main() {
   param.max_iterations = 100;
 
   LBFGSpp::LBFGSSolver<double> solver(param);
-  Rosenbrock fun(4);
+  MyFunctor fun(4);
 
   Eigen::VectorXd x = Eigen::VectorXd::Zero(4);
   x << 1.5, 8.0, 1.0, 0.5;
