@@ -9,27 +9,18 @@ import numpy as np
 
 
 CAPTUREDDIR = './captured'
+CALIBFLAG = 0  # cv2.CALIB_FIX_K3
 
 
-def main():
-    if len(sys.argv) != 4:
-        print('Usage :')
-        print('  Save captured images into \'' + CAPTUREDDIR + '\'')
-        print(
-            '  Run \'python3 caliblate_camera_from_images.py <num of chess corners in vert> <num of chess corners in hori> <chess block size(m or mm)>')
-        return
+def calibFromImages(dirname, chess_shape, chess_block_size):
+    if not os.path.exists(dirname):
+        print('Directory \'' + dirname + '\' was not found')
+        return None
 
-    chess_shape = (int(sys.argv[1]), int(sys.argv[2]))
-    chess_block_size = float(sys.argv[3])
-
-    if not os.path.exists(CAPTUREDDIR):
-        print('Directory \'' + CAPTUREDDIR + '\' was not found')
-        return
-
-    filenames = sorted(glob.glob(CAPTUREDDIR + '/*'))
+    filenames = sorted(glob.glob(dirname + '/*'))
     if len(filenames) == 0:
-        print('No image was found in \'' + CAPTUREDDIR + '\'')
-        return
+        print('No image was found in \'' + dirname + '\'')
+        return None
 
     print('=== Camera Calibration ===')
 
@@ -58,9 +49,8 @@ def main():
             print('Not found')
 
     print(' ', len(objp_list), 'images are used')
-    calib_flag = 0
     ret, cam_int, cam_dist, rvecs, tvecs = cv2.calibrateCamera(
-        objp_list, imgp_list, img_shape, None, None, None, None, flags=calib_flag
+        objp_list, imgp_list, img_shape, None, None, None, None, CALIBFLAG
     )
     print('Image size :', img_shape)
     print('RMS :', ret)
@@ -82,6 +72,17 @@ def main():
     fs.write('translation_vectors', np.array(tvecs))
     fs.release()
 
+    return (img_shape, ret, cam_int, cam_dist, rvecs, tvecs)
+
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 4:
+        chess_shape = (int(sys.argv[1]), int(sys.argv[2]))
+        chess_block_size = float(sys.argv[3])
+
+        calibFromImages(CAPTUREDDIR, chess_shape, chess_block_size)
+    else:
+        print('Usage :')
+        print('  Save captured images into \'' + CAPTUREDDIR + '\'')
+        print(
+            '  Run \'python3 caliblate_camera_from_images.py <num of chess corners in vert> <num of chess corners in hori> <chess block size(m or mm)>')
