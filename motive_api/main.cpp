@@ -23,13 +23,14 @@ int main() {
     return 1;
   }
 
+  // Motiveのプロファイルを指定する（Motive 1系を使うときは不要）
   if (TT_LoadProfile("C:/ProgramData/OptiTrack/MotiveProfile.motive") !=
       NPRESULT_SUCCESS) {
     std::cout << "Failed to load user profile" << std::endl;
     return 1;
   }
 
-  // 自分のキャリブレーションファイルを指定する
+  // 自分のキャリブレーションファイルを指定する（Motive 1系を使うときはTT_LoadProject）
   if (TT_LoadCalibration(
           "D:/Documents/OptiTrack/Session 2018-12-21/Calibration Poor (MeanErr "
           "1.107 mm) 2018-12-21 8.cal") != NPRESULT_SUCCESS) {
