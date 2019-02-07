@@ -37,6 +37,9 @@ Visualization 3D data using plotly.py.
 
 [https://kamino.hatenablog.com/entry/python-3d-visualization](https://kamino.hatenablog.com/entry/python-3d-visualization)
 
+## pointgray
+C++ sample code to use a PointGray camera.
+
 ## projector_calibration
 Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
 
