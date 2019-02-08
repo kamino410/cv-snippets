@@ -2,7 +2,7 @@
 #ifdef _WIN32
 #define UNITYCALLCONV __stdcall
 #define UNITYEXPORT __declspec(dllexport)
-#elif
+#else
 #define UNITYCALLCONV
 #define UNITYEXPORT
 #endif
