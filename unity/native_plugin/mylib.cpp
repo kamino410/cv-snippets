@@ -1,3 +1,12 @@
+
+#ifdef _WIN32
+#define UNITYCALLCONV __stdcall
+#define UNITYEXPORT __declspec(dllexport)
+#elif
+#define UNITYCALLCONV
+#define UNITYEXPORT
+#endif
+
 extern "C" {
-int __stdcall getNumber() { return 777; }
+UNITYEXPORT int UNITYCALLCONV getNumber() { return 777; }
 }
