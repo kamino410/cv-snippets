@@ -17,15 +17,16 @@ void NATNET_CALLCONV ServerDiscoveredCallback(
 
 void NATNET_CALLCONV DataHandler(sFrameOfMocapData* data, void* pUserData) {
   for (auto body : data->RigidBodies) {
-    bodies[body.ID].x = body.x;
-    bodies[body.ID].y = body.y;
-    bodies[body.ID].z = body.z;
-    bodies[body.ID].qx = body.qx;
-    bodies[body.ID].qy = body.qy;
-    bodies[body.ID].qz = body.qz;
-    bodies[body.ID].qw = body.qw;
-    bodies[body.ID].error = body.MeanError;
-    bodies[body.ID].valid = body.params & 0x01;
+    RigidBody *tar = &bodies[body.ID];
+    tar->x = body.x;
+    tar->y = body.y;
+    tar->z = body.z;
+    tar->qx = body.qx;
+    tar->qy = body.qy;
+    tar->qz = body.qz;
+    tar->qw = body.qw;
+    tar->error = body.MeanError;
+    tar->valid = body.params & 0x01;
   }
 }
 }  // namespace NatNetImpl
