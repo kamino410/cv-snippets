@@ -9,7 +9,6 @@ Blender 2.80
 ```py
 bpy.context.scene.unit_settings.length_unit = 'METERS'
 bpy.context.scene.unit_settings.scale_length = 0.001  # mm
-bpy.context.space_data.overlay.grid_scale = 0.01 # grid per 1cm
 ```
 
 ## Mesh
@@ -79,6 +78,7 @@ obj2 = bpy.data.objects['obj2']
 bool_mod = obj1.modifiers.new(type="BOOLEAN", name="MyBoolMod")
 bool_mod.object = obj2
 bool_mod.operation = "DIFFERENCE"
+bpy.context.view_layer.objects.active = body
 bpy.ops.object.modifier_apply(modifier=bool_mod.name)
 ```
 
