@@ -1,4 +1,5 @@
 .DS_Store
+*.mlmodel
 
 xcuserdata/
 playground.xcworkspace
