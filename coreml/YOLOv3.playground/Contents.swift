@@ -8,14 +8,14 @@ guard let model = try? VNCoreMLModel(for: MLModel(contentsOf: modelURL)) else {
     fatalError()
 }
 
-func createRequest(model: VNCoreMLModel) -> VNCoreMLRequest{
+func createRequest(model: VNCoreMLModel) -> VNCoreMLRequest {
     return VNCoreMLRequest(model: model, completionHandler: { (req, err) in
         DispatchQueue.main.async(execute: {
             guard let results = req.results as? [VNRecognizedObjectObservation] else {
                 fatalError("Error results")
             }
             for result in results {
-                print("\(result.confidence) : ", terminator: "")
+                print("\(result.confidence) : \(result.boundingBox)")
                 let len = result.labels.count > 5 ? 5 : result.labels.count
                 for i in 0..<len{
                     print("\(result.labels[i].identifier), ", terminator: "")
