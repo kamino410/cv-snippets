@@ -2,5 +2,6 @@
 *.mlmodel
 
 xcuserdata/
+timeline.xctimeline
 playground.xcworkspace
 
