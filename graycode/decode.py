@@ -28,7 +28,7 @@ def main():
     gc_width = int((proj_width-1)/step)+1
     gc_height = int((proj_height-1)/step)+1
 
-    graycode = cv2.structured_light_GrayCodePattern.create(gc_height, gc_width)
+    graycode = cv2.structured_light_GrayCodePattern.create(gc_width, gc_height)
     graycode.setBlackThreshold(BLACKTHR)
     graycode.setWhiteThreshold(WHITETHR)
 
