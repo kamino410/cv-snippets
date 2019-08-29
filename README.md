@@ -34,6 +34,9 @@ Obtain projector-camera relationship using gray code pattern.
 
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
+## media
+GIF animation etc...
+
 ## optimization
 Numerical optimization using Eigen / scipy.
 
