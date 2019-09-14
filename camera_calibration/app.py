@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 
-CALIBFLAG = 0 // cv2.CALIB_FIX_K3 | cv2.CALIB_ZERO_TANGENT_DIST
+CALIBFLAG = 0  # cv2.CALIB_FIX_K3 | cv2.CALIB_ZERO_TANGENT_DIST
 
 
 class MyCamera():  # Modify this class according to your environment
