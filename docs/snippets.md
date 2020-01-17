@@ -27,10 +27,6 @@
 
 ```json
 {
-  "auths" : {
-    "https://index.docker.io/v1/" : {
-    }
-  },
   "detachKeys" : "ctrl-\\"
 }
 ```
