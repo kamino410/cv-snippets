@@ -1,4 +1,4 @@
-# Snippets
+# My Code Snippets
 
 1. [Docker - Enable ctrl+p](#sec1)
 1. [NeoVim Setup](#sec2)
@@ -19,6 +19,7 @@
 1. [Python](#sec7)
     1. [CSV Reader](#sec7_1)
     1. [Simple XML Write/Reader](#sec7_2)
+    1. [Plotly 1D data](#sec7_3)
 
 <h2 id="sec1">Docker - Enable ctrl+p</h2>
 
@@ -369,4 +370,34 @@ print("Keys : " + ', '.join([key for key, val in valuelist]))
 
 data = np.loadtxt(StringIO(valuedict['data']), delimiter=',')
 print(data)
+```
+
+<h3 id="sec7_3">Plotly 1D data</h3>
+
+```py
+import sys
+import re
+from io import StringIO
+import numpy as np
+
+datastr = sys.stdin.read()
+pattern = re.compile(r'<([^<>]+)>\s*(.+)\s*</\1>', re.MULTILINE | re.DOTALL)
+valuelist = re.findall(pattern, datastr)
+valuedict = dict(valuelist)
+print("Keys : " + ', '.join([key for key, val in valuelist]))
+
+
+import plotly.offline as po
+import plotly.graph_objs as go
+
+data = []
+for key, val in valuelist:
+    arr = np.loadtxt(StringIO(val), delimiter=',')
+    trace = go.Scatter(y=arr, name=key, mode='markers')
+    data.append(trace)
+
+layout = dict(title='test')
+
+fig = go.Figure(data=data, layout=layout)
+po.plot(fig, filename='test.html')
 ```
