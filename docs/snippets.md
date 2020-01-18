@@ -7,6 +7,7 @@
 1. [Git Setup](#sec3)
 1. [Docker - Enable ctrl+p](#sec_docker)
     1. [Enable ctrl+p](#sec_docker_ctrlp)
+    1. [GUI via XWindow](#sec_docker_gui)
     1. [Jupyter Notebook on Container](#sec_docker_notebook)
 1. [Install OpenCV](#sec_opencv)
 1. [Install Latest CMake into Ubuntu](#sec4)
@@ -19,9 +20,12 @@
 1. [C++](#sec_cpp)
     1. [Stopwatch](#sec_cpp_1)
     1. [CSV Reader](#sec_cpp_2)
+    1. [OpenCV File Storage](#sec_cpp_filestorage)
 1. [Python](#sec_py)
+    1. [argparse Template](#sec_py_argparse)
     1. [CSV Reader](#sec_py_1)
     1. [Simple XML Writer/Reader](#sec_py_2)
+    1. [OpenCV File Storage](#sec_py_filestorage)
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
 
@@ -217,6 +221,13 @@ git config --global core.editor nvim
 }
 ```
 
+<h3 id="sec_docker_gui">GUI by XWindow</h3>
+
+* `ssh -Y xxxx@xxx.xxx.xxx.xxx`
+* `sudo docker run -it --gpus all -e DISPLAY=$DISPLAY --net host -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/.Xauthority:/root/.Xauthority <image>`
+* Test : `apt install x11-app`
+* To display on host Ubuntu : `xhost +local:docker`
+
 <h3 id="sec_docker_notebook">Jupyter Notebook on Container</h3>
 
 ```sh
@@ -391,7 +402,34 @@ int main() {
 }
 ```
 
+<h3 id="sec_cpp_filestorage">OpenCV File Storage</h3>
+
+```cpp
+{
+  cv::FileStorage fs('filename.xml', cv::FileStorage::WRITE);
+  fs << "intr" << intr;
+}
+
+{
+  cv::FileStorage fs('filename.xml', cv::FileStorage::READ);
+  fs["intr"] >> intr;
+}
+```
+
 <h2 id="sec_py">Python</h2>
+
+<h3 id="sec_py_argparse">argparse Template</h3>
+
+```py
+import argparse
+
+parser = argparse.ArgumentParser(description='test app')
+
+parser.add_argument('height', type=int, help='height[pix]')
+parser.add_argument('-step', type=int, default=40, help='step')
+
+args = parser.parse_args()
+```
 
 <h3 id="sec_py_1">CSV Reader</h3>
 
@@ -427,6 +465,18 @@ print("Keys : " + ', '.join([key for key, val in valuelist]))
 
 data = np.loadtxt(StringIO(valuedict['data']), delimiter=',')
 print(data)
+```
+
+<h3 id="sec_py_filestorage">OpenCV File Storage</h3>
+
+```py
+fs = cv2.FileStorage('filename.xml', cv2.FILE_STORAGE_WRITE)
+fs.write('intr', intr)
+fs.release()
+
+fs = cv2.FileStorage('filename.xml', cv2.FileStorage_READ)
+intr = fs.getNode('intr').mat()
+fs.release()
 ```
 
 <h3 id="sec_py_3">Plotly 1D data</h3>
