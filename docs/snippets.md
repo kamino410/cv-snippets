@@ -1,11 +1,13 @@
 # My Code Snippets
 
-1. [Docker - Enable ctrl+p](#sec1)
-1. [NeoVim Setup](#sec2)
+1. [NeoVim & Terminal Setup](#sec2)
     1. [Ubuntu 16.04](#sec2_1)
     1. [Ubuntu 18.04](#sec2_2)
     1. [Windows 10](#sec2_3)
 1. [Git Setup](#sec3)
+1. [Docker - Enable ctrl+p](#sec_docker)
+    1. [Enable ctrl+p](#sec_docker_ctrlp)
+    1. [Jupyter Notebook on Container](#sec_docker_notebook)
 1. [Install OpenCV](#sec_opencv)
 1. [Install Latest CMake into Ubuntu](#sec4)
 1. [CMake Templates](#sec5)
@@ -19,20 +21,10 @@
     1. [CSV Reader](#sec6_2)
 1. [Python](#sec7)
     1. [CSV Reader](#sec7_1)
-    1. [Simple XML Write/Reader](#sec7_2)
+    1. [Simple XML Writer/Reader](#sec7_2)
     1. [Plotly 1D data](#sec7_3)
 
-<h2 id="sec1">Docker - Enable ctrl+p</h2>
-
-`~/.docker/config.json`
-
-```json
-{
-  "detachKeys" : "ctrl-\\"
-}
-```
-
-<h2 id="sec2">NeoVim Setup</h2>
+<h2 id="sec2">NeoVim & Terminal Setup</h2>
 
 <h3 id="sec2_1">Ubuntu 16.04</h3>
 
@@ -212,6 +204,24 @@ git config --global user.name kamino410
 git config --global core.editor nvim
 ```
 
+<h2 id="sec_docker">Docker Tips</h2>
+
+<h3 id="sec_docker_ctrlp">Enable ctrl+p</h3>
+
+`~/.docker/config.json`
+
+```json
+{
+  "detachKeys" : "ctrl-\\"
+}
+```
+
+<h3 id="sec_docker_notebook">Jupyter Notebook on Container</h3>
+
+```sh
+jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root
+```
+
 <h2 id="sec_opencv">Install Opencv</h2>
 
 必要に応じてコンパイルオプション・バージョンを変えること。
@@ -260,6 +270,8 @@ popd
 ```
 
 <h2 id="sec4">Install Latest CMake into Ubuntu</h2>
+
+適宜バージョンを指定すること。
 
 ```sh
 apt install libncurses5-dev libcurl4-openssl-dev
@@ -385,10 +397,10 @@ int main() {
 ```py
 import numpy as np
 
-data = np.loadtxt("iris.csv", delimiter=",")
+data = np.loadtxt("data.csv", delimiter=",")
 ```
 
-<h3 id="sec7_2">Simple XML Write/Reader</h3>
+<h3 id="sec7_2">Simple XML Writer/Reader</h3>
 
 ```py
 import sys
