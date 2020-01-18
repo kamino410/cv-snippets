@@ -212,7 +212,7 @@ git config --global user.name kamino410
 git config --global core.editor nvim
 ```
 
-<h2 id="sec_opencv">Install Opencv/h2>
+<h2 id="sec_opencv">Install Opencv</h2>
 
 必要に応じてコンパイルオプション・バージョンを変えること。
     
