@@ -16,13 +16,14 @@
     1. [Eigen](#sec5_3)
     1. [Ceres](#sec5_4)
     1. [CUDA](#sec5_5)
-1. [C++](#sec6)
-    1. [Stopwatch](#sec6_1)
-    1. [CSV Reader](#sec6_2)
-1. [Python](#sec7)
-    1. [CSV Reader](#sec7_1)
-    1. [Simple XML Writer/Reader](#sec7_2)
-    1. [Plotly 1D data](#sec7_3)
+1. [C++](#sec_cpp)
+    1. [Stopwatch](#sec_cpp_1)
+    1. [CSV Reader](#sec_cpp_2)
+1. [Python](#sec_py)
+    1. [CSV Reader](#sec_py_1)
+    1. [Simple XML Writer/Reader](#sec_py_2)
+    1. [Plotly 1D data](#sec_py_3)
+    1. [Plotly Figure](#sec_py_plotly_figure)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -337,9 +338,9 @@ find_package(CUDA REQUIRED)
 cuda_add_executable(main main.cpp kernel.cu)
 ```
 
-<h2 id="sec6">C++</h2>
+<h2 id="sec_cpp">C++</h2>
 
-<h3 id="sec6_1">C++ Stopwatch</h3>
+<h3 id="sec_cpp_1">Stopwatch</h3>
 
 ```cpp
 #include <chrono>
@@ -358,7 +359,7 @@ int main() {
 }
 ```
 
-<h3 id="sec6_2">CSV Reader</h3>
+<h3 id="sec_cpp_2">CSV Reader</h3>
 
 ```cpp
 #include <fstream>
@@ -390,9 +391,9 @@ int main() {
 }
 ```
 
-<h2 id="sec7">Python</h2>
+<h2 id="sec_py">Python</h2>
 
-<h3 id="sec7_1">CSV Reader</h3>
+<h3 id="sec_py_1">CSV Reader</h3>
 
 ```py
 import numpy as np
@@ -400,7 +401,7 @@ import numpy as np
 data = np.loadtxt("data.csv", delimiter=",")
 ```
 
-<h3 id="sec7_2">Simple XML Writer/Reader</h3>
+<h3 id="sec_py_2">Simple XML Writer/Reader</h3>
 
 ```py
 import sys
@@ -428,7 +429,7 @@ data = np.loadtxt(StringIO(valuedict['data']), delimiter=',')
 print(data)
 ```
 
-<h3 id="sec7_3">Plotly 1D data</h3>
+<h3 id="sec_py_3">Plotly 1D data</h3>
 
 ```py
 import sys
@@ -456,4 +457,73 @@ layout = dict(title='test')
 
 fig = go.Figure(data=data, layout=layout)
 po.plot(fig, filename='test.html')
+```
+
+<h3 id="sec_py_plotly_figure">Plotly Figure</h3>
+
+```py
+fig = dict(
+  data = [
+    # Trace(グラフ化するデータを格納するオブジェクト)のリスト
+    # グラフの種類に応じて
+    #   Scatter/Scattergl/Bar/Box/Pie/Area/Heatmap
+    #   Contour/Histogram/Histogram2D/Histogram2Dcontour
+    #   Ohlc/Candlestick/Table/Scatter3D/Surface/Mesh3D
+    # のいずれかが入る
+    go.Scatter(
+      x = [0, 1], y = [10, 20],  # データ(グラフの種類によっては文字列が入ったり、zがあったりする)
+      mode = 'lines',
+      line = dict(     # 線の書式
+        width = 2,
+      ),
+      marker = dict(   # データ点の書式
+        symbol = 'circle',
+        size = 6,
+      ),
+      showlegend = True,  # 凡例にこのTraceを表示するかどうか
+    ),
+  ],
+  layout = dict(
+    font = dict(       # グローバルのフォント設定
+      family = '"Open Sans", verdana, arial, sans-serif',
+      size = 12,
+      color = '#444',
+    ),
+    title = dict(
+      text = '',       # グラフのタイトル
+      font = dict(),   # タイトルのフォント設定
+    ),
+    width = 700,       # 全体のサイズ
+    height = 450,
+    autosize = True,   # HTMLで表示したときページに合わせてリサイズするかどうか
+    margin = dict(     # グラフ領域の余白設定
+      l = 80, r = 80, t = 100, b = 80,
+      pad = 0,         # グラフから軸のラベルまでのpadding
+      autoexpand = True,  # LegendやSidebarが被ったときに自動で余白を増やすかどうか
+    ),
+    xaxis = dict(      # 2Dグラフ用のx軸の設定
+      title = dict(text = '', font = dict()),  # x軸のラベル
+      type = '-',      # 'linear'、'log'、'date'などに設定可能
+      autorange = True,
+      range = [0, 1],
+      scaleanchor = 'x1', scaleratio = 1,  # 他の軸とのスケールを固定したいときに使う
+      tickmode = 'auto',  # 目盛りの刻み方(目盛り関連の設定項目は他にもいくつかあります)
+    ),
+    yaxis = dict(),    # 2Dグラフ用のy軸の設定、だいたいx軸と一緒
+    scene = dict(      # 3Dグラフ用の設定
+      camera = dict(),
+      xaxis = dict(), yaxis = dict(), zaxis = dict()
+    ),
+    geo = dict(),      # グラフに地図を表示させるときの設定
+    showlegend = True, # 凡例を表示するかどうか
+    legend = dict(
+      font = dict(),   # 凡例のフォント設定
+      x = 1.02, xanchor = 'left',  # 凡例の表示場所の設定
+      y = 1, yanchor = 'auto',
+      bordercolor = '#444', borderwidth = 0,  # 凡例を囲む枠線の設定
+    ),
+    annotations = [],  # グラフ中に注釈を入れたいときに使う
+    shapes = [],       # グラフ中に線や塗りつぶしを挿入したいときに使う
+  ),
+)
 ```
