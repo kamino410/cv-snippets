@@ -20,6 +20,7 @@
 1. [C++](#sec_cpp)
     1. [Stopwatch](#sec_cpp_1)
     1. [CSV Reader](#sec_cpp_2)
+    1. [OpenCV Standard Operations](#sec_cpp_opencv)
     1. [OpenCV File Storage](#sec_cpp_filestorage)
 1. [Python](#sec_py)
     1. [argparse Template](#sec_py_argparse)
@@ -399,6 +400,33 @@ int main() {
         }
         std::cout << std::endl;
     }
+}
+```
+
+<h3 id="sec_cpp_opencv">OpenCV Standard Operations</h3>
+
+```cpp
+#include <Eigen/Dense>
+#include <opencv2/core/eigen.hpp>
+#include <opencv2/opencv.hpp>
+
+int main() {
+  // Initialize with values
+  cv::Mat mat_cv = (cv::Mat_<double>(3, 3) << 2600, 0, 960, 0, 2600, 540, 0, 0, 1);
+  // Convert OpenCV <-> Eigen
+  Eigen::Matrix3d mat_eigen;
+  cv2eigen(mat_cv, mat_eigen);
+  eigen2cv(mat_eigen, mat_cv);
+
+  // Initialize cv::Mat
+  constexpr int HEIGHT = 1080;
+  constexpr int WIDTH = 1920;
+  cv::Mat img(HEIGHT, WIDTH, CV_8UC3, cv::Scalar(255, 255, 255));
+
+  // Access to pixel
+  int x = 0;
+  int y = 0;
+  img.at<cv::Vec3b>(y, x) = 0;
 }
 ```
 
