@@ -5,7 +5,7 @@
     1. [Ubuntu 18.04](#sec2_2)
     1. [Windows 10](#sec2_3)
 1. [Git Setup](#sec3)
-1. [Docker - Enable ctrl+p](#sec_docker)
+1. [Docker](#sec_docker)
     1. [Enable ctrl+p](#sec_docker_ctrlp)
     1. [GUI via XWindow](#sec_docker_gui)
     1. [Jupyter Notebook on Container](#sec_docker_notebook)
@@ -30,7 +30,7 @@
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
 1. [CUDA](#sec_cuda)
-    1. [Define Dimension](#sec_cuda_dim)
+    1. [Define Threads](#sec_cuda_dim)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -610,7 +610,7 @@ fig = dict(
 
 <h2 id="sec_cuda">CUDA</h2>
 
-<h3 id="sec_cuda_dim">Define Demension</h3>
+<h3 id="sec_cuda_dim">Define Threads</h3>
 
 1D
 
