@@ -29,6 +29,8 @@
     1. [OpenCV File Storage](#sec_py_filestorage)
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
+1. [CUDA](#sec_cuda)
+    1. [Define Dimension](#sec_cuda_dim)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -604,4 +606,41 @@ fig = dict(
     shapes = [],       # グラフ中に線や塗りつぶしを挿入したいときに使う
   ),
 )
+```
+
+<h2 id="sec_cuda">CUDA</h2>
+
+<h3 id="sec_cuda_dim">Define Demension</h3>
+
+1D
+
+```cu
+__global__ void test(..., int N) {
+  int i = blockDim.x * blockIdx.x + threadIdx.x;
+  if (i < N) {
+  }
+}
+
+int threadsPerBlock = 256;
+int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+test<<<blocksPerGrid, threadsPerBlock>>>(..., N);
+```
+
+2D
+
+```cu
+__global__ void test(..., int NX, int NY) {
+  int x = blockDim.x * blockIdx.x + threadIdx.x;
+  int y = blockDim.y * blockIdx.y + threadIdx.y;
+  if (x < NX && y < NY) {
+  }
+}
+
+int tpb_x = 256
+int tpb_y = 256
+int bpg_x = (NX + tpb_x - 1) / tpb_x;
+int bpg_y = (NY + tpb_y - 1) / tpb_y;
+dim3 threadsPerBlock (tpb_x, tpb_y);
+dim3 blocksPerGrid (bpg_x, bpg_y);
+test<<<blocksPerGrid, threadsPerBlock>>>(..., NX, NY);
 ```
