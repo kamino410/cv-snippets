@@ -14,9 +14,8 @@ void FlyCameraWrapper::printFlyInfo() {
   FlyCapture2::FC2Version fc2Version;
   FlyCapture2::Utilities::GetLibraryVersion(&fc2Version);
 
-  std::cout << "FlyCapture2 library version: " << fc2Version.major << "."
-            << fc2Version.minor << "." << fc2Version.type << "."
-            << fc2Version.build << std::endl;
+  std::cout << "FlyCapture2 library version: " << fc2Version.major << "." << fc2Version.minor << "."
+            << fc2Version.type << "." << fc2Version.build << std::endl;
 }
 
 void FlyCameraWrapper::printCamInfo(FlyCapture2::CameraInfo *pCamInfo) {
@@ -28,9 +27,7 @@ void FlyCameraWrapper::printCamInfo(FlyCapture2::CameraInfo *pCamInfo) {
   std::cout << "Sensor - " << pCamInfo->sensorInfo << std::endl;
   std::cout << "Resolution - " << pCamInfo->sensorResolution << std::endl;
   std::cout << "Firmware version - " << pCamInfo->firmwareVersion << std::endl;
-  std::cout << "Firmware build time - " << pCamInfo->firmwareBuildTime
-            << std::endl
-            << std::endl;
+  std::cout << "Firmware build time - " << pCamInfo->firmwareBuildTime << std::endl << std::endl;
 }
 
 FlyCameraWrapper::FlyCameraWrapper() {}
@@ -69,7 +66,22 @@ bool FlyCameraWrapper::autoExposure(bool flag, float absValue) {
   prop.absControl = true;
   prop.absValue = absValue;
   CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Exposure : " << (float)prop.absValue << std::endl;
 
+  return true;
+}
+
+bool FlyCameraWrapper::setWhiteBalance(int red, int blue) {
+  FlyCapture2::Property prop;
+  prop.type = FlyCapture2::WHITE_BALANCE;
+  prop.onOff = true;
+  prop.autoManualMode = false;
+  prop.valueA = red;
+  prop.valueB = blue;
+  CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "White Balance : " << (int)prop.valueA << "," << (int)prop.valueB << std::endl;
   return true;
 }
 
@@ -81,6 +93,21 @@ bool FlyCameraWrapper::autoSaturation(bool flag, float absValue) {
   prop.absControl = true;
   prop.absValue = absValue;
   CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Saturation : " << (float)prop.absValue << std::endl;
+
+  return true;
+}
+
+bool FlyCameraWrapper::autoSharpness(bool flag, float absValue) {
+  FlyCapture2::Property prop;
+  prop.type = FlyCapture2::SHARPNESS;
+  prop.autoManualMode = flag;
+  prop.absControl = true;
+  prop.absValue = absValue;
+  CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Sharpness : " << (float)prop.absValue << std::endl;
 
   return true;
 }
@@ -92,6 +119,8 @@ bool FlyCameraWrapper::autoShutter(bool flag, float absValue) {
   prop.absControl = true;
   prop.absValue = absValue;
   CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Shutter : " << (float)prop.absValue << std::endl;
 
   return true;
 }
@@ -103,6 +132,34 @@ bool FlyCameraWrapper::autoGain(bool flag, float absValue) {
   prop.absControl = true;
   prop.absValue = absValue;
   CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Gain : " << (float)prop.absValue << std::endl;
+
+  return true;
+}
+
+bool FlyCameraWrapper::autoBrightness(bool flag, float absValue) {
+  FlyCapture2::Property prop;
+  prop.type = FlyCapture2::BRIGHTNESS;
+  prop.autoManualMode = flag;
+  prop.absControl = true;
+  prop.absValue = absValue;
+  CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Brightness : " << (float)prop.absValue << std::endl;
+
+  return true;
+}
+
+bool FlyCameraWrapper::autoGamma(bool flag, float absValue) {
+  FlyCapture2::Property prop;
+  prop.type = FlyCapture2::GAMMA;
+  prop.autoManualMode = flag;
+  prop.absControl = true;
+  prop.absValue = absValue;
+  CHECK(cam.SetProperty(&prop));
+  CHECK(cam.GetProperty(&prop));
+  std::cout << "Gamma : " << (float)prop.absValue << std::endl;
 
   return true;
 }
@@ -120,7 +177,6 @@ bool FlyCameraWrapper::capture() {
   FlyCapture2::Image flybgr;
   flyimg.Convert(FlyCapture2::PIXEL_FORMAT_BGR, &flybgr);
 
-  cv::Mat(flybgr.GetRows(), flybgr.GetCols(), CV_8UC3, flybgr.GetData())
-      .copyTo(img);
+  cv::Mat(flybgr.GetRows(), flybgr.GetCols(), CV_8UC3, flybgr.GetData()).copyTo(img);
   return true;
 }

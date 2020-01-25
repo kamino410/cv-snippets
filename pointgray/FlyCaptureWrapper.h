@@ -9,7 +9,7 @@ class FlyCameraWrapper {
   void printFlyInfo();
   void printCamInfo(FlyCapture2::CameraInfo *pCamInfo);
 
- public:
+public:
   cv::Mat img;
 
   FlyCameraWrapper();
@@ -18,8 +18,12 @@ class FlyCameraWrapper {
   bool init(int serial);
   bool autoExposure(bool flag, float absValue = 1.5f);
   bool autoSaturation(bool flag, float absValue = 50.0f);
+  bool autoSharpness(bool flag, float absValue = 1.0f);
   bool autoShutter(bool flag, float absValue = 7.5f);
   bool autoGain(bool flag, float absValue = 0.0f);
+  bool autoBrightness(bool flag, float absValue = 0.0f);
+  bool autoGamma(bool flag, float absValue = 1.0f);
+  bool setWhiteBalance(int red, int blue);
   bool start();
   bool capture();
 };
