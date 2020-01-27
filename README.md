@@ -5,14 +5,14 @@ My code snippets for computer vision.
 Some web applications are published [here](https://kamino410.github.io/cv-snippets).
 
 ## camera_calibration
-Classes for mono / stereo camera calibration using checker board.
+Monoral / stereo camera calibration using checker board.
 
 ## camera_distortion_simulator
-Simulator of camera's intrinsic / distortion params.
+Simulator of camera's intrinsic / distortion parameters.
 
 ## coreml
-Machine learning codes using coreML.
-To run playground codes, you have to download model files into `*.playground/Resources/`.
+Sample software of machine learning using coreML.
+To run playground, you have to download model files into `*.playground/Resources/`.
 
 * Inception v3 : [https://docs-assets.developer.apple.com/coreml/models/Inceptionv3.mlmodel](https://docs-assets.developer.apple.com/coreml/models/Inceptionv3.mlmodel)
 * YOLO v3 : [https://docs-assets.developer.apple.com/coreml/models/Image/ObjectDetection/YOLOv3/YOLOv3.mlmodel](https://docs-assets.developer.apple.com/coreml/models/Image/ObjectDetection/YOLOv3/YOLOv3.mlmodel)
