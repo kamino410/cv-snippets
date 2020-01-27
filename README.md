@@ -34,8 +34,14 @@ Obtain projector-camera relationship using gray code pattern.
 
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
+## map_by_lut
+Warp image based on look up table.
+
 ## media
 GIF animation etc...
+
+## nn_fitting
+Non-linear regression using shallow neural network.
 
 ## optimization
 Numerical optimization using Eigen / scipy.
@@ -49,7 +55,7 @@ Visualization 3D data using plotly.py.
 [https://kamino.hatenablog.com/entry/python-3d-visualization](https://kamino.hatenablog.com/entry/python-3d-visualization)
 
 ## pointgray
-C++ sample code to use a PointGray camera.
+C++ sample code to control a PointGrey camera.
 
 ## projector_calibration
 Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
