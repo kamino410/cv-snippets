@@ -8,7 +8,7 @@ Some web applications are published [here](https://kamino410.github.io/cv-snippe
 Monoral / stereo camera calibration using checker board.
 
 ## camera_distortion_simulator
-Simulator of camera's intrinsic / distortion parameters.
+Simulator of camera's intrinsic and distortion parameters.
 
 ## coreml
 Sample software of machine learning using coreML.
@@ -27,7 +27,8 @@ Simple sample code to take a picture using Canon EDSDK.
 Estimate the gamma value of display from captured camera images.
 
 ## geometry
-* Voronoi diagram / Delaunay diagram
+* Voronoi diagram
+* Delaunay diagram
 
 ## graycode
 Obtain projector-camera relationship using gray code pattern.
@@ -35,7 +36,7 @@ Obtain projector-camera relationship using gray code pattern.
 [https://kamino.hatenablog.com/entry/opencv-graycode](https://kamino.hatenablog.com/entry/opencv-graycode)
 
 ## map_by_lut
-Warp image based on look up table.
+Warp image based on given look up table.
 
 ## media
 GIF animation etc...
@@ -58,7 +59,7 @@ Visualization 3D data using plotly.py.
 C++ sample code to control a PointGrey camera.
 
 ## projector_calibration
-Calibrate projector's intrinsic / extrinsic parameters using 2D-3D correspondence.
+Calibrate projector's intrinsic and extrinsic parameters using 2D-3D correspondence.
 
 ## unity
 * OpenCVTranslate<br>Script to reflect OpenCV extrinsic parameters to the object.
