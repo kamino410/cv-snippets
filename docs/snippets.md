@@ -26,6 +26,7 @@
     1. [Simple XML Writer/Reader](#sec_py_2)
     1. [OpenCV File Storage](#sec_py_filestorage)
     1. [OpenCV Fullscreen](#sec_py_fullscreen)
+    1. [Plotly Simple Template](#sec_py_plotly)
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
 1. [CUDA](#sec_cuda)
@@ -535,6 +536,31 @@ for i, (filename, xpos) in enumerate(zip(args.paths, args.xposs)):
     cv2.imshow(winname, img)
 
 cv2.waitKey()
+```
+
+<h3 id="sec_py_plotly">Plotly Simple Template</h3>
+
+```py
+import numpy as np
+
+import plotly.offline as po
+import plotly.graph_objs as go
+
+# po.init_notebook_mode(connected=True)
+
+xs = np.linspace(0, 100, 101)
+ys1 = np.random.randn(len(xs))
+ys2 = np.random.randn(len(xs))
+
+trace1 = go.Scatter(x=xs, y=ys1, mode='markers')
+trace2 = go.Scatter(x=xs, y=ys2, mode='lines+markers')
+
+data = [trace1, trace2]
+layout = dict(title='template of scatter')
+
+fig = go.Figure(data=data, layout=layout)
+po.plot(fig, filename='template_scatter.html')
+# fig.show()
 ```
 
 <h3 id="sec_py_3">Plotly 1D data</h3>
