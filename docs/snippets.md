@@ -1,5 +1,3 @@
-# My Code Snippets
-
 1. [NeoVim & Terminal Setup](#sec2)
     1. [Ubuntu 16.04](#sec2_1)
     1. [Ubuntu 18.04](#sec2_2)
@@ -27,6 +25,7 @@
     1. [CSV Reader](#sec_py_1)
     1. [Simple XML Writer/Reader](#sec_py_2)
     1. [OpenCV File Storage](#sec_py_filestorage)
+    1. [OpenCV Fullscreen](#sec_py_fullscreen)
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
 1. [CUDA](#sec_cuda)
@@ -507,6 +506,35 @@ fs.release()
 fs = cv2.FileStorage('filename.xml', cv2.FileStorage_READ)
 intr = fs.getNode('intr').mat()
 fs.release()
+```
+
+<h3 id="sec_py_fullscreen">OpenCV Fullscreen</h3>
+
+```py
+import argparse
+import cv2
+
+parser = argparse.ArgumentParser(description='Display images with full screen')
+
+parser.add_argument('--paths', nargs='+', help='images paths')
+parser.add_argument('--xposs', type=int, nargs='+', help='x-positions')
+
+args = parser.parse_args()
+
+if len(args.paths) != len(args.xposs):
+    print('Invalid inputs')
+
+for i, (filename, xpos) in enumerate(zip(args.paths, args.xposs)):
+    img = cv2.imread(filename)
+    winname = 'img' + str(i+1)
+    cv2.namedWindow(winname, cv2.WINDOW_NORMAL)
+    cv2.moveWindow(winname, xpos, 0)
+    cv2.setWindowProperty(
+        winname, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
+    cv2.imshow(winname, img)
+
+cv2.waitKey()
 ```
 
 <h3 id="sec_py_3">Plotly 1D data</h3>
