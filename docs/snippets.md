@@ -20,6 +20,7 @@
     1. [CSV Reader](#sec_cpp_2)
     1. [OpenCV Standard Operations](#sec_cpp_opencv)
     1. [OpenCV File Storage](#sec_cpp_filestorage)
+    1. [OpenCV Fullscreen](#sec_cpp_fullscreen)
 1. [Python](#sec_py)
     1. [argparse Template](#sec_py_argparse)
     1. [CSV Reader](#sec_py_1)
@@ -443,6 +444,26 @@ int main() {
 {
   cv::FileStorage fs('filename.xml', cv::FileStorage::READ);
   fs["intr"] >> intr;
+}
+```
+
+<h3 id="sec_cpp_fullscreen">OpenCV Fullscreen</h3>
+
+```cpp
+#include <iostream>
+#include <opencv2/opencv.hpp>
+
+int main() {
+  cv::namedWindow("Pattern", cv::WINDOW_NORMAL);
+  cv::resizeWindow("Pattern", 1080, 1920);
+  // 2枚目のディスプレイにフルスクリーン表示
+  cv::moveWindow("Pattern", 0, 0);
+  cv::setWindowProperty("Pattern", cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
+
+  cv::Mat img = cv::Mat::zeros(1080, 1920, CV_8U);
+
+  cv::imshow("Pattern", img);
+  cv::waitKey();
 }
 ```
 
