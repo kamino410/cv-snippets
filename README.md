@@ -44,6 +44,9 @@ GIF animation etc...
 ## nn_fitting
 Non-linear regression using shallow neural network.
 
+## nn_warp_image
+2D non-linear regression for image warping using shallow neural network
+
 ## optimization
 Numerical optimization using Eigen / scipy.
 
