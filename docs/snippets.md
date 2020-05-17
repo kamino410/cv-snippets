@@ -32,6 +32,8 @@
     1. [Plotly Figure](#sec_py_plotly_figure)
 1. [CUDA](#sec_cuda)
     1. [Define Threads](#sec_cuda_dim)
+1. [Image Processing](#sec_imgproc)
+    1. [Generate checkerboard](#sec_imgproc_chess)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -718,4 +720,14 @@ int bpg_y = (NY + tpb_y - 1) / tpb_y;
 dim3 threadsPerBlock (tpb_x, tpb_y);
 dim3 blocksPerGrid (bpg_x, bpg_y);
 test<<<blocksPerGrid, threadsPerBlock>>>(..., NX, NY);
+```
+
+<h2 id="sec_imgproc">Image Processing</h2>
+<h3 id="sec_imgproc_chess">Generate checkerboard</h3>
+
+```py
+bsize = 60
+img = np.kron(
+    [[1,0]*int(1920/2/bsize), [0,1]*int(1920/2/bsize)]*int(1080/2/bsize),
+    np.ones((bsize, bsize)))*255
 ```
