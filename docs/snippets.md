@@ -30,14 +30,14 @@
     1. [Plotly Simple Template](#sec_py_plotly)
     1. [Plotly 1D data](#sec_py_3)
     1. [Plotly Figure](#sec_py_plotly_figure)
-1. [CUDA](#sec_cuda)
-    1. [Define Threads](#sec_cuda_dim)
-1. [Image Processing](#sec_imgproc)
-    1. [Generate checkerboard](#sec_imgproc_chess)
 1. [SIMD](#sec_simd)
     1. [Check supported architecture](#sec_simd_check)
     1. [SSE](#sec_simd_sse)
     1. [AVX](#sec_simd_avx)
+1. [CUDA](#sec_cuda)
+    1. [Define Threads](#sec_cuda_dim)
+1. [Image Processing](#sec_imgproc)
+    1. [Generate checkerboard](#sec_imgproc_chess)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
