@@ -34,6 +34,10 @@
     1. [Define Threads](#sec_cuda_dim)
 1. [Image Processing](#sec_imgproc)
     1. [Generate checkerboard](#sec_imgproc_chess)
+1. [SIMD](#sec_simd)
+    1. [Check supported architecture](#sec_simd_check)
+    1. [SSE](#sec_simd_sse)
+    1. [AVX](#sec_simd_avx)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -684,6 +688,69 @@ fig = dict(
   ),
 )
 ```
+
+<h2 id="sec_simd">SIMD</h2>
+<h3 id="sec_simd_check">Check supported architecture</h3>
+Ubuntu
+```sh
+cat /proc/cpuinfo
+```
+
+mac
+```sh
+sysctl -a | grep cpu.features
+sysctl -a | grep cpu.leaf7_features
+```
+
+<h3 id="sec_simd_sse">SSE</h3>
+
+```c++
+#include <stdio.h>
+#include <xmmintrin.h>
+
+int main(void) {
+    __m128 a = {1.0f, 2.0f, 3.0f, 4.0f};
+    __m128 b = {1.1f, 2.1f, 3.1f, 4.1f};
+    float c[4];
+    __m128 ps = _mm_add_ps(a, b); // add
+    _mm_storeu_ps(c, ps); // store
+
+    printf("  source: (%5.1f, %5.1f, %5.1f, %5.1f)\n",
+            a[0], a[1], a[2], a[3]);
+    printf("  dest. : (%5.1f, %5.1f, %5.1f, %5.1f)\n",
+           b[0], b[1], b[2], b[3]);
+    printf("  result: (%5.1f, %5.1f, %5.1f, %5.1f)\n",
+           c[0], c[1], c[2], c[3]);
+    return 0;
+}
+```
+
+* `-msse4`のようにコンパイルオプションを付ける（デフォルトでenableになっているケースもあるっぽい）
+
+<h3 id="sec_simd_avx">AVX</h3>
+
+```c++
+#include <stdio.h>
+#include <immintrin.h>
+
+int main(void) {
+    __m256 a = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f};
+    __m256 b = {1.1f, 2.1f, 3.1f, 4.1f, 5.1f, 6.1f, 7.1f, 8.1f};
+    __m256 c;
+
+    c = _mm256_add_ps(a, b);
+
+    printf("  source: (%5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f)\n",
+            a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7]);
+    printf("  dest. : (%5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f)\n",
+            b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7]);
+    printf("  result: (%5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f, %5.1f)\n",
+           c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7]);
+    return 0;
+}
+```
+
+* `-mavx2`のようにコンパイルオプションを付ける
 
 <h2 id="sec_cuda">CUDA</h2>
 
