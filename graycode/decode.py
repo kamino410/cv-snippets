@@ -61,8 +61,9 @@ def main():
                 continue
             err, proj_pix = graycode.getProjPixel(imgs, x, y)
             if not err:
-                viz_c2p[y, x, :] = [proj_pix[0], proj_pix[1], 128]
-                c2p_list.append(((x, y), proj_pix))
+                fixed_pix = step*(proj_pix[0]+0.5), step*(proj_pix[1]+0.5)
+                viz_c2p[y, x, :] = [fixed_pix[0], fixed_pix[1], 128]
+                c2p_list.append(((x, y), fixed_pix))
 
     print('=== Result ===')
     print('Decoded c2p correspondences :', len(c2p_list))
