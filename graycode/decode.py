@@ -66,8 +66,8 @@ def main():
 
     print('=== Result ===')
     print('Decoded c2p correspondences :', len(c2p_list))
-    cv2.imwrite('vizualize_c2p.png', viz_c2p)
-    print('Vizualized image : \'./visualize_c2p.png\'')
+    cv2.imwrite('visualize_c2p.png', viz_c2p)
+    print('Visualized image : \'./visualize_c2p.png\'')
     with open('result_c2p.csv', 'w') as f:
         f.write('cam_x, cam_y, proj_x, proj_y\n')
         for p in c2p_list:
