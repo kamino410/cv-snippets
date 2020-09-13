@@ -145,6 +145,8 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 `~/AppData/Local/nvim/init.vim`
 
+なぜかdeinだとうまくいかないのでvimplugを使っている。
+
 ```vim
 let g:python3_host_prog = "C:/Program Files/Python37/python"
 
@@ -162,7 +164,7 @@ call plug#end()
 let g:deoplete#enable_at_startup = 1
 
 let NERDTreeShowHidden=1
-nnoremap <silent><C-e> :NERDTreeTabsToggle<CR>
+nnoremap <silent><C-K><C-S> :NERDTreeTabsToggle<CR>
 
 set hidden
 set signcolumn=yes

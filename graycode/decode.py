@@ -61,13 +61,14 @@ def main():
                 continue
             err, proj_pix = graycode.getProjPixel(imgs, x, y)
             if not err:
-                viz_c2p[y, x, :] = [proj_pix[0], proj_pix[1], 128]
-                c2p_list.append(((x, y), proj_pix))
+                fixed_pix = step*(proj_pix[0]+0.5), step*(proj_pix[1]+0.5)
+                viz_c2p[y, x, :] = [fixed_pix[0], fixed_pix[1], 128]
+                c2p_list.append(((x, y), fixed_pix))
 
     print('=== Result ===')
     print('Decoded c2p correspondences :', len(c2p_list))
-    cv2.imwrite('vizualize_c2p.png', viz_c2p)
-    print('Vizualized image : \'./visualize_c2p.png\'')
+    cv2.imwrite('visualize_c2p.png', viz_c2p)
+    print('Visualized image : \'./visualize_c2p.png\'')
     with open('result_c2p.csv', 'w') as f:
         f.write('cam_x, cam_y, proj_x, proj_y\n')
         for p in c2p_list:
