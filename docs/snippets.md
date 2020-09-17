@@ -73,6 +73,7 @@ cp ./.config/nvim/init.vim ~/.config/nvim
 cp ./.config/nvim/ftplugin/cpp.vim ~/.config/nvim/ftplugin
 cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
+echo set sh=bash >> ~/.config/nvim
 cd ~
 wget https://github.com/peco/peco/releases/download/v0.5.3/peco_linux_386.tar.gz
 tar -xzf peco_linux_386.tar.gz
