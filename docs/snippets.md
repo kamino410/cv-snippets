@@ -15,6 +15,7 @@
     1. [Eigen](#sec5_3)
     1. [Ceres](#sec5_4)
     1. [CUDA](#sec5_5)
+    1. [OpenMP](#sec5_6)
 1. [C++](#sec_cpp)
     1. [Stopwatch](#sec_cpp_1)
     1. [CSV Reader](#sec_cpp_2)
@@ -361,6 +362,16 @@ find_package(CUDA REQUIRED)
 # include_directories(${EIGEN3_INCLUDE_DIRS})
 
 cuda_add_executable(main main.cpp kernel.cu)
+```
+
+<h3 id="sec5_6">OpenMP</h3>
+
+```cmake
+find_package(OpenMP REQUIRED)
+if(OpenMP_FOUND)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 ```
 
 <h2 id="sec_cpp">C++</h2>
