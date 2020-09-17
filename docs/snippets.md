@@ -115,6 +115,7 @@ cp ./.config/nvim/init.vim ~/.config/nvim
 cp ./.config/nvim/ftplugin/cpp.vim ~/.config/nvim/ftplugin
 cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
+echo set sh=bash >> ~/.config/nvim
 cd ~
 cat <<EOF >> ~/.bashrc
 export LC_ALL=C.UTF-8
@@ -298,7 +299,7 @@ popd
 適宜バージョンを指定すること。
 
 ```sh
-apt install libncurses5-dev libcurl4-openssl-dev
+apt install libncurses5-dev libcurl4-openssl-dev zlib1g-dev wget
 wget https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4.tar.gz
 tar -xzf cmake-3.15.4.tar.gz
 cd cmake-3.15.4
