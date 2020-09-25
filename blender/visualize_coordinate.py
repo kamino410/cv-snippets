@@ -3,7 +3,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
-def create_axis(name, rot, tvec):
+def draw_coord_system(name, rot, tvec):
     bpy.ops.mesh.primitive_cone_add(
         radius1=0.2, depth=0.4, location=(0, 0, 2.2))
     bpy.ops.mesh.primitive_cylinder_add(
@@ -67,4 +67,4 @@ def create_axis(name, rot, tvec):
 # rotation matrix and translate vector to transform from object to world
 rot = Rotation.from_euler('XYX', [90, 90, 10], degrees=True)
 tvec = np.array([1, 1, 1])
-create_axis('camera_axis', rot, tvec)
+draw_coord_system('camera_system', rot, tvec)
