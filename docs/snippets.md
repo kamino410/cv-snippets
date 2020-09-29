@@ -37,6 +37,7 @@
     1. [AVX](#sec_simd_avx)
 1. [CUDA](#sec_cuda)
     1. [Define Threads](#sec_cuda_dim)
+    1. [Kernel Stopwatch](#sec_cuda_stopwatch)
 1. [Image Processing](#sec_imgproc)
     1. [Generate checkerboard](#sec_imgproc_chess)
 
@@ -802,6 +803,26 @@ int bpg_y = (NY + tpb_y - 1) / tpb_y;
 dim3 threadsPerBlock (tpb_x, tpb_y);
 dim3 blocksPerGrid (bpg_x, bpg_y);
 test<<<blocksPerGrid, threadsPerBlock>>>(..., NX, NY);
+```
+
+<h3 id="sec_cuda_stopwatch">Kernel Stopwatch</h3>
+
+```cu
+cudaEvent_t start, stop;
+cudaEventCreate(&start);
+cudaEventCreate(&stop);
+
+cudaEventRecord(start);
+
+// Kernel operation
+
+cudaEventRecord(stop);
+cudaEventSynchronize(stop);
+float milliseconds = 0;
+cudaEventElapsedTime(&milliseconds, start, stop);
+std::cout << "Device processing time : " << milliseconds << " ms" << std::endl;
+cudaEventDestroy(start);
+cudaEventDestroy(stop);
 ```
 
 <h2 id="sec_imgproc">Image Processing</h2>
