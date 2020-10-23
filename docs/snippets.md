@@ -302,10 +302,12 @@ popd
 適宜バージョンを指定すること。
 
 ```sh
-apt install libncurses5-dev libcurl4-openssl-dev zlib1g-dev wget
-wget https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4.tar.gz
-tar -xzf cmake-3.15.4.tar.gz
-cd cmake-3.15.4
+CMAKE_VER=3.18.4
+apt update
+apt install -y libncurses5-dev libcurl4-openssl-dev zlib1g-dev wget
+wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}.tar.gz
+tar -xzf cmake-${CMAKE_VER}.tar.gz
+cd cmake-${CMAKE_VER}
 ./bootstrap --system-curl
 make install -j7
 ln -s /usr/local/bin/cmake /usr/bin/cmake
