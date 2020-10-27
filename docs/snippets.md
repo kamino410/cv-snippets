@@ -120,6 +120,9 @@ cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
 echo set sh=bash >> ~/.config/nvim
 cd ~
+cat <<EOF >> ~/.config/nvim/init.vim
+set sh=bash
+EOF
 cat <<EOF >> ~/.bashrc
 export LC_ALL=C.UTF-8
 alias nvrr='nvr --remote-tab'
