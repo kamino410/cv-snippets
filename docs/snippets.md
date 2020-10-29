@@ -75,7 +75,7 @@ cp ./.config/nvim/init.vim ~/.config/nvim
 cp ./.config/nvim/ftplugin/cpp.vim ~/.config/nvim/ftplugin
 cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
-echo set sh=bash >> ~/.config/nvim
+echo set sh=bash >> ~/.config/nvim/init.vim
 cd ~
 wget https://github.com/peco/peco/releases/download/v0.5.3/peco_linux_386.tar.gz
 tar -xzf peco_linux_386.tar.gz
@@ -118,11 +118,8 @@ cp ./.config/nvim/init.vim ~/.config/nvim
 cp ./.config/nvim/ftplugin/cpp.vim ~/.config/nvim/ftplugin
 cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
-echo set sh=bash >> ~/.config/nvim
+echo set sh=bash >> ~/.config/nvim/init.vim
 cd ~
-cat <<EOF >> ~/.config/nvim/init.vim
-set sh=bash
-EOF
 cat <<EOF >> ~/.bashrc
 export LC_ALL=C.UTF-8
 alias nvrr='nvr --remote-tab'
