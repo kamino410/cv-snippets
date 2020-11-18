@@ -1,6 +1,8 @@
 #include <opencv2/opencv.hpp>
 #include <xiApi.h>
 
+// works at around 90 FPS (97 FPS if disable imshow)
+
 #define HandleResult(res, place)                 \
   if (res != XI_OK) {                            \
     printf("Error after %s (%d)\n", place, res); \
