@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+# works at around 90 FPS (97 FPS if disable imshow)
+
 # Install XIMEA software package
 # Copy 'XIMEA\API\Python\v3\ximea' to 'PythonXX\Lib'
 
@@ -12,8 +14,8 @@ cam = xiapi.Camera()
 cam.open_device_by_SN('XXXXXXXX')  # Enter serial number of your Ximea camera
 
 # Configuration
-cam.set_exposure(100000)
-cam.set_gain(1)
+cam.set_exposure(5000)
+cam.set_gain(24)
 cam.set_gammaY(1)
 
 # Allocate memory for ximea image
