@@ -38,9 +38,8 @@ int main() {
   stat = xiGetImage(xiH, 5000, &img);
   HandleResult(stat, "xiGetImage");
   
-  // Share the buffer between XI_IMG and cv::Mat (Ximea API uses a same buffer in each frame)
-  cv::Mat cvimg(cv::Size((int)img.width, (int)img.height), CV_8UC1);
-  cvimg.data = (unsigned char*)img.bp;
+  // Create cv::Mat sharing the buffer between XI_IMG (Ximea API uses a same buffer in each frame)
+  cv::Mat cvimg(cv::Size((int)img.width, (int)img.height), CV_8UC1, img.bp);
   
   // Preview output from camera
   do {
