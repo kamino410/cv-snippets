@@ -16,6 +16,7 @@
     1. [Ceres](#sec5_4)
     1. [CUDA](#sec5_5)
     1. [OpenMP](#sec5_6)
+    1. [Threads](#sec5_7)
 1. [C++](#sec_cpp)
     1. [Stopwatch](#sec_cpp_1)
     1. [CSV Reader](#sec_cpp_2)
@@ -375,6 +376,13 @@ if(OpenMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
+```
+
+<h3 id="sec5_7">Threads</h3>
+
+```cmake
+find_package(Threads REQUIRED)
+target_link_libraries(main PRIVATE Threads::Threads)
 ```
 
 <h2 id="sec_cpp">C++</h2>
