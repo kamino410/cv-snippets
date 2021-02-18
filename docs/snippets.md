@@ -41,6 +41,8 @@
     1. [Kernel Stopwatch](#sec_cuda_stopwatch)
 1. [Image Processing](#sec_imgproc)
     1. [Generate checkerboard](#sec_imgproc_chess)
+1. [Network](#sec_network)
+    1. [Check used IPs](#sec_check_used_ips)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -843,4 +845,13 @@ bsize = 60
 img = np.kron(
     [[1,0]*int(1920/2/bsize), [0,1]*int(1920/2/bsize)]*int(1080/2/bsize),
     np.ones((bsize, bsize)))*255
+```
+
+<h2 id="sec_network">Network</h2>
+<h3 id="sec_check_used_ips">Check used IPs</h3>
+
+現在のarpテーブルを表示するだけだが、最近activeだったIPを調べるだけならこれで十分。
+
+```sh
+arp -a
 ```
