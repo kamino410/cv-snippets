@@ -43,6 +43,7 @@
     1. [Generate checkerboard](#sec_imgproc_chess)
 1. [Network](#sec_network)
     1. [Check used IPs](#sec_check_used_ips)
+    2. [Temporal HTTP Server](#sec_http_server)
 
 <h2 id="sec2">NeoVim & Terminal Setup</h2>
 
@@ -854,4 +855,15 @@ img = np.kron(
 
 ```sh
 arp -a
+```
+
+<h3 id="sec_http_server">Temporal HTTP Server</h3>
+
+```sh
+python3 -m http.server 8000
+```
+
+```sh
+npm install -g http-server
+http-server -p 8000
 ```
