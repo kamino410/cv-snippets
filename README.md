@@ -64,6 +64,9 @@ C++ sample code to control a PointGrey camera.
 ## projector_calibration
 Calibrate projector's intrinsic and extrinsic parameters using 2D-3D correspondence.
 
+## protobuf
+C++, js examples to use protobuf.
+
 ## unity
 * OpenCVTranslate<br>Script to reflect OpenCV extrinsic parameters to the object.
 * OpenCVCameraParams<br>Script to reflect OpenCV intrinsic parameters to the camera.
