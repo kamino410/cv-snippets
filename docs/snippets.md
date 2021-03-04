@@ -17,6 +17,7 @@
     1. [CUDA](#sec5_5)
     1. [OpenMP](#sec5_6)
     1. [Threads](#sec5_7)
+    1. [GTest](#sec5_8)
 1. [C++](#sec_cpp)
     1. [Stopwatch](#sec_cpp_1)
     1. [CSV Reader](#sec_cpp_2)
@@ -363,6 +364,17 @@ target_link_libraries(main ${CERES_LIBRARIES})
 <h3 id="sec5_5">CUDA</h3>
 
 ```cmake
+project(main CXX CUDA)
+
+add_executable(main main.cu)
+
+# cudaコードを含むlibraryをlinkする場合
+target_link_libraries(main mylib)
+set_target_properties(main PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+```
+
+#### Classic Style
+```cmake
 find_package(CUDA REQUIRED)
 
 # .cuファイルにincludeさせるときはtarget_include_directoriesではダメっぽい
@@ -386,6 +398,14 @@ endif()
 ```cmake
 find_package(Threads REQUIRED)
 target_link_libraries(main PRIVATE Threads::Threads)
+```
+
+<h3 id="sec5_8">GTest</h3>
+
+```cmake
+enable_testing()
+find_package(GTest REQUIRED)
+target_link_libraries(main_test PRIVATE GTest::GTest GTest::Main)
 ```
 
 <h2 id="sec_cpp">C++</h2>
