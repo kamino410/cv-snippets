@@ -97,7 +97,7 @@ peco-select-history() {
 bind -x '"\C-r": peco-select-history'
 EOF
 EOF2
-sh install.sh
+DEBIAN_FRONTEND=noninteractive sh install.sh
 ```
 
 <h3 id="sec2_2">Ubuntu 18.04</h3>
@@ -136,7 +136,7 @@ peco-select-history() {
 bind -x '"\C-r": peco-select-history'
 EOF
 EOF2
-sh install.sh
+DEBIAN_FRONTEND=noninteractive sh install.sh
 ```
 
 <h3 id="sec2_3">Windows 10</h3>
