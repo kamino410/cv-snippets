@@ -108,12 +108,13 @@ apt update
 apt install -y software-properties-common
 add-apt-repository -y ppa:neovim-ppa/unstable
 apt update
-apt install -y python3 neovim python3-pip git clang clang-tools curl clang-format peco
+apt install -y python3 neovim python3-pip git clang clang-tools curl clang-format peco fish
 python3 -m pip install pynvim neovim neovim-remote autopep8
 mkdir -p ~/.config
 mkdir -p ~/.config/dein
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/nvim/ftplugin
+mkdir -p ~/.config/fish
 mkdir -p ~/github
 cd ~/github
 git clone https://github.com/kamino410/dotfiles.git
@@ -123,6 +124,7 @@ cp ./.config/nvim/init.vim ~/.config/nvim
 cp ./.config/nvim/ftplugin/cpp.vim ~/.config/nvim/ftplugin
 cp ./.config/dein/plugins.toml ~/.config/dein
 cp ./.config/dein/plugins_lazy.toml ~/.config/dein
+cp ./.config/fish/config.fish ~/.config/fish
 echo set sh=bash >> ~/.config/nvim/init.vim
 cd ~
 cat <<EOF >> ~/.bashrc
